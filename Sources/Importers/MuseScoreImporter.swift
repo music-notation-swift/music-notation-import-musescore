@@ -29,8 +29,11 @@ public struct MuseScoreImporter {
 		var xmlString = ""
 
 		if file.pathExtension == "mscz" {
-			guard let string = try? String(contentsOf: file) else { throw MuseScoreImportError(file: file, "Could not open mscz file") }
-			xmlString = string
+			let filename = (file.lastPathComponent as NSString).deletingPathExtension
+			guard let archive = try? Archive(url: file, accessMode: .read, pathEncoding: nil) else { throw MuseScoreImportError(file: file, "Could not open gp archive") }
+			guard let scoreEntry = archive["\(filename).mscx"] else { throw MuseScoreImportError(file: file, "Could not open XML file inside mscz archive") }
+
+			xmlString = try unzipToString(archive, entry: scoreEntry)
 		}
 
 		return try createNotation(with: try parseXML(xmlString))
