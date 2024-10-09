@@ -26,22 +26,14 @@ public struct MuseScoreImporter {
 		if verbose { print("--- Starting parsing of: \(file) ---") }
 		defer { if verbose { print("--- Ending parsing of: \(file) ---") } }
 
-		var xmlString: String
+		var xmlString = ""
 
-		switch file.pathExtension {
-		case "mscz":
-			guard let string = try? String(contentsOf: file) else { throw MuseScoreImportError(file: file, "Could not open gpif file") }
+		if file.pathExtension == "mscz" {
+			guard let string = try? String(contentsOf: file) else { throw MuseScoreImportError(file: file, "Could not open mscz file") }
 			xmlString = string
-			partConfigurationsData = Data()
-
-			xmlString = ""
 		}
 
-		let notation = try createNotation(
-			with: try parseXML(xmlString),
-		)
-
-		return notation
+		return try createNotation(with: try parseXML(xmlString))
 	}
 
 	func unzipToString(_ archive: Archive, entry: Entry) throws -> String {
@@ -72,31 +64,11 @@ public struct MuseScoreImporter {
 			config.detectParsingErrors = true
 		}.parse(xmlString)
 
-		return try xml["GPIF"].value()
+		return try xml["museScore"].value()
 	}
 
-	public func createNotation(
-		with interchangeFormat: MusicNotationImportMuseScore.MuseScoreInterchangeFormat,
-		partConfigurations: [PartConfiguration]
-	) throws -> MusicNotation.Score {
-		let parts = interchangeFormat.tracks.map { track in
-			MusicNotation.Part(with: track)
-		}
-
-		// Collect score field names
-
-		return MusicNotation.Score(
-			parts: parts,
-			title: interchangeFormat.score.title,
-			subtitle: interchangeFormat.score.subtitle,
-			artist: interchangeFormat.score.artist,
-			album: interchangeFormat.score.album,
-			words: interchangeFormat.score.words,
-			wordsAndMusic: interchangeFormat.score.wordsAndMusic,
-			transcriber: interchangeFormat.score.tabber,
-			instructions: interchangeFormat.score.instructions,
-			notices: interchangeFormat.score.notices
-		)
+	public func createNotation(with interchangeFormat: MusicNotationImportMuseScore.MuseScoreInterchangeFormat) throws -> MusicNotation.Score {
+		return MusicNotation.Score()
 	}
 }
 
