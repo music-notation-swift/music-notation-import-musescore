@@ -13,11 +13,13 @@ import SWXMLHash
 public struct MuseScoreInterchangeFormat: XMLObjectDeserialization {
 	public var version: Version
 	public var revision: Revision
+	public var score: Score
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		try MuseScoreInterchangeFormat(
 			version: Version.withString(node["programVersion"].value()),
-			revision: Revision.withString(node["programRevision"].value())
+			revision: Revision.withString(node["programRevision"].value()),
+			score: node["Score"].value()
 		)
 	}
 }
