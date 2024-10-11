@@ -28,12 +28,12 @@ public struct StaffLink: XMLObjectDeserialization {
 		let attribute = Int(attributeString)
 
 		guard let attribute else { throw StaffLinkError.staffLinkIdConversionError }
-		return try StaffLink(
+		return StaffLink(
 			id: attribute,
-			staffLink: node["staffLink"].value(),
-			name: node["name"].value(),
-			staffType: node["StaffType"].value(),
-			defaultClef: node["defaultClef"].value()
+			staffLink: try node["staffLink"].value(),
+			name: try node["name"].value(),
+			staffType: try node["StaffType"].value(),
+			defaultClef: try node["defaultClef"].value()
 		)
 	}
 }

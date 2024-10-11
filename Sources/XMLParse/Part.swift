@@ -19,11 +19,11 @@ public struct Part: XMLObjectDeserialization {
 		let id = Int(idString)
 		guard let id else { throw PartError.partIdConversionError }
 
-		return try Part(
+		return Part(
 			id: id,
-			staffStubs: node["linkedTo"].value(),
-			trackName: node["name"].value(),
-			instrument: node["instrument"].value()
+			staffStubs: try node["linkedTo"].value(),
+			trackName: try node["name"].value(),
+			instrument: try node["instrument"].value()
 		)
 	}
 }

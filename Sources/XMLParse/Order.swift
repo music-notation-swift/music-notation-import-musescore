@@ -13,11 +13,9 @@ public struct Order: XMLObjectDeserialization {
 	var name: String
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		let attribute: String = try node.value(ofAttribute: "id")
-
-		return try Order(
-			id: attribute,
-			name: node["name"].value()
+		Order(
+			id: try node.value(ofAttribute: "id"),
+			name: try node["name"].value()
 		)
 	}
 }

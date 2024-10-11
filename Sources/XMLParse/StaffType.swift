@@ -17,9 +17,6 @@ public struct StaffType: XMLObjectDeserialization {
 	var name: String
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		let group: String = try node.value(ofAttribute: "group")
-		return try StaffType(
-			group: group,
-			name: node["name"].value()
-		)
+		return StaffType(group: group, name: try node["name"].value())
 	}
 }

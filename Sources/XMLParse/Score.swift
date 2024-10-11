@@ -17,8 +17,8 @@ public struct Score: XMLObjectDeserialization {
 	var open: Int
 	var metaTags: [MetaTag]
 	var order: Order
-//	var part: Part
-//	var staves: [Staff]
+	var part: Part
+	var staves: [Staff]
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		try Score(
@@ -29,13 +29,9 @@ public struct Score: XMLObjectDeserialization {
 			showMargins: node["showMargins"].value(),
 			open: node["open"].value(),
 			metaTags: node["metaTag"].value(),
-			order: node["Order"].value()
-//			part: <#T##<<error type>>#>,
-//			staves: <#T##<<error type>>#>*/
+			order: node["Order"].value(),
+			part: node["Part"].value(),
+			staves: node["Staff"].value()
 		)
 	}
 }
-
-//public enum ScoreError: Error {
-//}
-

@@ -17,11 +17,9 @@ public struct Family: XMLObjectDeserialization {
 	var name: String
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		let attribute: String = try node.value(ofAttribute: "id")
-
-		return try Family(
-			id: attribute,
-			name: node["family"].value()
+		Family(
+			id: node.value(ofAttribute: "id"),
+			name: try node["family"].value()
 		)
 	}
 }
