@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-@testable import MusicNotationImportGuitarPro
+@testable import MusicNotationImportMuseScore
 import Testing
 
 @Suite final class VersionTests {
