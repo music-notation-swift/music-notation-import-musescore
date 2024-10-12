@@ -27,31 +27,31 @@ public enum MetaTag: XMLObjectDeserialization {
 		let propertyAttribute: String = try node.value(ofAttribute: "name")
 		switch propertyAttribute {
 		case "arranger":
-			return .arranger(try node["arranger"].value())
+			return .arranger(try node.value())
 		case "composer":
-			return .composer(try node["composer"].value())
+			return .composer(try node.value())
 		case "copyright":
-			return .copyright(try node["copyright"].value())
+			return .copyright(try node.value())
 		case "creationDate":
-			return .creationDate(try node["creationDate"].value())
+			return .creationDate(try node.value())
 		case "lyricist":
-			return .lyricist(try node["lyricist"].value())
+			return .lyricist(try node.value())
 		case "movementNumber":
-			return .movementNumber(try node["movementNumber"].value())
+			return .movementNumber(try node.value())
 		case "movementTitle":
-			return .movementTitle(try node["movementTitle"].value())
+			return .movementTitle(try node.value())
 		case "platform":
-			return .platform(try node["platform"].value())
+			return .platform(try node.value())
 		case "source":
-			return .source(try node["source"].value())
+			return .source(try node.value())
 		case "subtitle":
-			return .subtitle(try node["subtitle"].value())
+			return .subtitle(try node.value())
 		case "translator":
-			return .translator(try node["translator"].value())
+			return .translator(try node.value())
 		case "workNumber":
-			return .workNumber(try node["workNumber"].value())
+			return .workNumber(try node.value())
 		case "workTitle":
-			return .workTitle(try node["workTitle"].value())
+			return .workTitle(try node.value())
 		default:
 			throw MetaTagParseError.unsupportedPropertyAttribute(propertyAttribute)
 		}
