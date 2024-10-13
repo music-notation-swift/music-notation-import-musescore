@@ -32,6 +32,14 @@ import Testing
  """
 	var xml: XMLIndexer?
 
+	let badXMLToParse = """
+  <root>
+   <open>1</open>
+   <metaTag name="xxx">test arranger</metaTag>
+   <Order id="orchestral">
+  </root>
+ """
+
 	init() {
 		// Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -46,9 +54,25 @@ import Testing
 		#expect(try xml!["root"]["metaTag"][0].value(ofAttribute: "name") == "arranger")
 	}
 
-	@Test func shouldBeAbleToParseArrayOfMetaTags() async throws {
+	@Test func parseArrayOfMetaTags() async throws {
 		let metaTags: [MetaTag] = try xml!["root"]["metaTag"].value()
 		#expect(metaTags.count == 13)
 		#expect(try xml!["root"]["metaTag"].all.count == 13)
+	}
+
+	@Test func parseSpecificMetaTag() async throws {
+		let metaTag: MetaTag = try xml!["root"]["metaTag"].withAttribute("name", "arranger").value()
+		#expect(metaTag != nil)
+
+		guard case let .arranger(string) = metaTag else { Issue.record("arranger data not found"); return }
+		#expect(string == "test arranger")
+	}
+
+	@Test func parseBadMetaTag() async throws {
+		#expect(throws: MetaTagParseError.self) {
+			xml = XMLHash.parse(badXMLToParse)
+			let metaTags: [MetaTag] = try xml!["root"]["metaTag"].value()
+			#expect(metaTags.count == 0)
+		}
 	}
 }
