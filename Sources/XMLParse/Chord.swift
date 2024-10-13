@@ -8,10 +8,32 @@
 
 import SWXMLHash
 
+//<Chord>
+//  <eid>176093659252</eid>
+//  <linkedMain />
+//  <durationType>quarter</durationType>
+//  <Note>
+//	<eid>180388626453</eid>
+//	<linkedMain />
+//	<pitch>40</pitch>
+//	<tpc>18</tpc>
+//	<fret>0</fret>
+//	<string>5</string>
+//  </Note>
+//</Chord>
+
 public struct Chord: XMLObjectDeserialization {
 	var eid: Int
+	var linkedMain: Bool
+	var durationType: Duration
+	var note: Note
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		Chord(eid: try node["eid"].value())
+		Chord(
+			eid: try node["eid"].value(),
+			linkedMain: try node["linkedMain"].value(),
+			durationType: try node["durationType"].value(),
+			note: try node["Note"].value()
+		)
 	}
 }
