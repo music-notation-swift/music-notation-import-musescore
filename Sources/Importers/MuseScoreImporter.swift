@@ -28,12 +28,15 @@ public struct MuseScoreImporter {
 
 		var xmlString = ""
 
+		// `mscz` is the zipped archive of the XML and other _stuff_, whereas the `mscx` is just the XML file.
 		if file.pathExtension == "mscz" {
 			let filename = (file.lastPathComponent as NSString).deletingPathExtension
 			guard let archive = try? Archive(url: file, accessMode: .read, pathEncoding: nil) else { throw MuseScoreImportError(file: file, "Could not open gp archive") }
 			guard let scoreEntry = archive["\(filename).mscx"] else { throw MuseScoreImportError(file: file, "Could not open XML file inside mscz archive") }
 
 			xmlString = try unzipToString(archive, entry: scoreEntry)
+		} else if file.pathExtension == "mscx" {
+			xmlString = try String(contentsOf: file)
 		}
 
 		return try createNotation(with: try parseXML(xmlString))
