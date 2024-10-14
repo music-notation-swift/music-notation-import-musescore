@@ -57,7 +57,7 @@ import Testing
 	@Test func parseArrayOfMetaTags() async throws {
 		let metaTags: [MetaTag] = try xml!["root"]["metaTag"].value()
 		#expect(metaTags.count == 13)
-		#expect(try xml!["root"]["metaTag"].all.count == 13)
+		#expect(xml!["root"]["metaTag"].all.count == 13)
 	}
 
 	@Test func parseSpecificMetaTag() async throws {
