@@ -26,20 +26,23 @@ public struct MuseScoreImporter {
 		if verbose { print("--- Starting parsing of: \(file) ---") }
 		defer { if verbose { print("--- Ending parsing of: \(file) ---") } }
 
-		var xmlString = ""
+		let xmlString = try createStringFromFile()
+		return try createNotation(with: try parseXML(xmlString))
+	}
 
+	func createStringFromFile() throws -> String {
 		// `mscz` is the zipped archive of the XML and other _stuff_, whereas the `mscx` is just the XML file.
 		if file.pathExtension == "mscz" {
 			let filename = (file.lastPathComponent as NSString).deletingPathExtension
 			guard let archive = try? Archive(url: file, accessMode: .read, pathEncoding: nil) else { throw MuseScoreImportError(file: file, "Could not open gp archive") }
 			guard let scoreEntry = archive["\(filename).mscx"] else { throw MuseScoreImportError(file: file, "Could not open XML file inside mscz archive") }
 
-			xmlString = try unzipToString(archive, entry: scoreEntry)
+			return try unzipToString(archive, entry: scoreEntry)
 		} else if file.pathExtension == "mscx" {
-			xmlString = try String(contentsOf: file)
+			return try String(contentsOf: file)
 		}
 
-		return try createNotation(with: try parseXML(xmlString))
+		throw MuseScoreImporterError.unsupportedFileFormat(file.pathExtension)
 	}
 
 	func unzipToString(_ archive: Archive, entry: Entry) throws -> String {
@@ -51,16 +54,6 @@ public struct MuseScoreImporter {
 
 		guard let string = String(data: xmlData, encoding: .utf8) else { throw MuseScoreImportError(file: file, "Could not convert data from archive to string") }
 		return string
-	}
-
-	func unzipToData(_ archive: Archive, entry: Entry) throws -> Data {
-		var entryData = Data()
-
-		_ = try archive.extract(entry, consumer: { data in
-			entryData.append(data)
-		})
-
-		return entryData
 	}
 
 	// Parse the XML of the score
@@ -89,4 +82,8 @@ public struct MuseScoreImportError: Error, CustomStringConvertible {
 	}
 
 	public var description: String { message }
+}
+
+enum MuseScoreImporterError: Error {
+	case unsupportedFileFormat(String)
 }

@@ -31,7 +31,8 @@ let package = Package(
 		),
 		.testTarget(
 			name: "MusicNotationImportMuseScoreTests",
-			dependencies: ["MusicNotationImportMuseScore"]
+			dependencies: ["MusicNotationImportMuseScore"],
+			resources: [.copy("TestFiles")]
 		)
 	],
 
