@@ -8,7 +8,14 @@
 
 import SWXMLHash
 
+//<KeySig>
+//  <eid>167503724567</eid>
+//  <linkedMain />
+//  <concertKey>0</concertKey>
+//</KeySig>
+
 public struct KeySignature: XMLObjectDeserialization {
+	static let key = "KeySig"
 	var eid: Int
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {

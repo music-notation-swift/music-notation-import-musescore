@@ -9,6 +9,7 @@
 import SWXMLHash
 
 public struct Measure: XMLObjectDeserialization {
+	static let key = "Measure"
 	var voices: [Voice]
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {

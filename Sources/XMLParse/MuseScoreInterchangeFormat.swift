@@ -21,7 +21,7 @@ public struct MuseScoreInterchangeFormat: XMLObjectDeserialization {
 			version: Version.withString(node["programVersion"].value()),
 			revision: Revision.withString(node["programRevision"].value()),
 			lastEID: node["LastEID"].value(),
-			score: node["Score"].value()
+			score: node[Score.key].value()
 		)
 	}
 }

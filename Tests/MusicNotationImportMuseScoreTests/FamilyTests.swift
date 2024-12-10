@@ -13,7 +13,7 @@ import Testing
 @Suite final class FamilyTests {
 	@Test func parseFamily() async throws {
 		let xmlParser = XMLHash.parse("<family id=\"guitars\">Guitars</family>")
-		let family: Family = try xmlParser["family"].value()
+		let family: Family = try xmlParser[Family.key].value()
 		#expect(family.id == "guitars")
 		#expect(family.name == "Guitars")
 	}

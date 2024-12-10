@@ -30,7 +30,7 @@ import Testing
 
 		let xmlParser = XMLHash.parse(xmlString)
 
-		let chord: Chord = try xmlParser["Chord"].value()
+		let chord: Chord = try xmlParser[Chord.key].value()
 		#expect(chord.eid == 176093659252)
 		#expect(chord.linkedMain == true)
 		#expect(chord.durationType == .quarter)

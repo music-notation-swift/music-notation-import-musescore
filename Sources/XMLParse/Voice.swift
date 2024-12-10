@@ -14,7 +14,7 @@ public struct Voice: XMLObjectDeserialization {
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Voice(
-			rests: try node["Rest"].value(),
+			rests: try node[Rest.key].value(),
 			chords: try node["Chord"].value()
 		)
 	}

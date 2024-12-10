@@ -17,13 +17,13 @@ public enum VoiceElement: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		guard let element = node.element else { throw VoiceElementError.elementParseError }
 		switch element.name {
-		case "Rest":
+		case Rest.key:
 			return .rest(try node.value())
-		case "Chord":
+		case Chord.key:
 			return .keySignature(try node.value())
-		case "KeySig":
+		case KeySignature.key:
 			return .keySignature(try node.value())
-		case "TimeSig":
+		case TimeSignature.key:
 			return .keySignature(try node.value())
 		default:
 			throw VoiceElementError.unknownVoiceElementError

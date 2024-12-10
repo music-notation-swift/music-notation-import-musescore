@@ -9,6 +9,7 @@
 import SWXMLHash
 
 public struct Rest: XMLObjectDeserialization {
+	static let key = "Rest"
 	var eid: Int
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {

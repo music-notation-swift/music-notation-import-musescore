@@ -9,6 +9,7 @@
 import SWXMLHash
 
 public struct Text: XMLObjectDeserialization {
+	static let key = "Text"
 	var eid: Int
 	var style: String
 	var text: String

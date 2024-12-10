@@ -9,6 +9,8 @@
 import SWXMLHash
 
 public enum MetaTag: XMLObjectDeserialization {
+	static let key = "metaTag"
+
 	case arranger(String)
 	case composer(String)
 	case copyright(String)

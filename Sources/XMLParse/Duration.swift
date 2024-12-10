@@ -11,6 +11,7 @@ import SWXMLHash
 //<durationType>quarter</durationType>
 
 public enum Duration: XMLObjectDeserialization {
+	static let key = "Duration"
 	case quarter
 	case half
 	case measure

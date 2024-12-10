@@ -13,6 +13,7 @@ import SWXMLHash
 //</StaffType>
 
 public struct StaffType: XMLObjectDeserialization {
+	static let key = "StaffType"
 	var group: String
 	var name: String
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {

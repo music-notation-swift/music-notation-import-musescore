@@ -38,6 +38,8 @@ import SWXMLHash
 //</Note>
 
 public struct Note: XMLObjectDeserialization {
+	static let key = "Note"
+
 	var eid: Int
 	var linkedMain: Bool
 	var pitch: Int

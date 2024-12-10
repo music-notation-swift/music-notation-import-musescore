@@ -9,6 +9,7 @@
 import SWXMLHash
 
 public struct TimeSignature: XMLObjectDeserialization {
+	static let key = "TimeSig"
 	var eid: Int
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {

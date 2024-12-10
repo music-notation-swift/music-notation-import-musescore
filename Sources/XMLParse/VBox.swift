@@ -17,7 +17,7 @@ public struct VBox: XMLObjectDeserialization {
 		VBox(
 			eid: try node["eid"].value(),
 			height: try node["height"].value(),
-			texts: try node["Text"].value()
+			texts: try node[Text.key].value()
 		)
 	}
 }

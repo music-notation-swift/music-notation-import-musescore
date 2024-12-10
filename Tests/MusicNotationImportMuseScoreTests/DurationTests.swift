@@ -1,5 +1,5 @@
 //
-//	DurationsTests.swift
+//	DurationTests.swift
 //	music-notation-import-musescore-tests
 //
 //	Created by Steven Woolgar on 2024-12-09.
@@ -10,7 +10,7 @@
 import SWXMLHash
 import Testing
 
-@Suite final class DurationsTests {
+@Suite final class DurationTests {
 	@Test func quarterDuration() async throws {
 		let xmlParser = XMLHash.parse("<durationType>quarter</durationType>")
 		let duration: Duration = try xmlParser["durationType"].value()
