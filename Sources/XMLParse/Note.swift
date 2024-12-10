@@ -39,7 +39,7 @@ import SWXMLHash
 
 public struct Note: XMLObjectDeserialization {
 	var eid: Int
-	var linkedMain: Bool?
+	var linkedMain: Bool
 	var pitch: Int
 	var tpc: Int
 	var fret: Int
@@ -48,7 +48,7 @@ public struct Note: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Note(
 			eid: try node["eid"].value(),
-			linkedMain: try node["linkedMain"].value(),
+			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
 			pitch: try node["pitch"].value(),
 			tpc: try node["tpc"].value(),
 			fret: try node["fret"].value(),

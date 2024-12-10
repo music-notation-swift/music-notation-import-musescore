@@ -1,9 +1,9 @@
 //
 //	MetaTagTests.swift
-//	music-notation-import-guitarpro-tests
+//	music-notation-import-musescore-tests
 //
-//	Created by Steven Woolgar on 2021-02-10.
-//	Copyright © 2021 Steven Woolgar. All rights reserved.
+//	Created by Steven Woolgar on 2024-12-09.
+//	Copyright © 2024 Steven Woolgar. All rights reserved.
 //
 
 @testable import MusicNotationImportMuseScore

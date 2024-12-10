@@ -31,7 +31,7 @@ public struct Chord: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Chord(
 			eid: try node["eid"].value(),
-			linkedMain: try node["linkedMain"].value(),
+			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
 			durationType: try node["durationType"].value(),
 			note: try node["Note"].value()
 		)
