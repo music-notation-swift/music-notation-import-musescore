@@ -13,7 +13,7 @@ import SWXMLHash
 //</instrument>
 
 public struct Family: XMLObjectDeserialization {
-	static let key = "family"
+	static let nodeKey = "family"
 	var id: String?
 	var name: String
 

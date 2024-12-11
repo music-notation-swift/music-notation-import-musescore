@@ -9,12 +9,13 @@
 import SWXMLHash
 
 public struct Voice: XMLObjectDeserialization {
+	static let nodeKey = "voice"
 	var rests: [Rest]?
 	var chords: [Chord]?
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Voice(
-			rests: try node[Rest.key].value(),
+			rests: try node[Rest.nodeKey].value(),
 			chords: try node["Chord"].value()
 		)
 	}

@@ -101,7 +101,7 @@ import SWXMLHash
 //</Staff>
 
 public struct Staff: XMLObjectDeserialization {
-	static let key = "Staff"
+	static let nodeKey = "Staff"
 	var id: Int
 	var vBox: VBox
 	var measures: [Measure]
@@ -110,7 +110,7 @@ public struct Staff: XMLObjectDeserialization {
 		Staff(
 			id: try node.value(ofAttribute: "id"),
 			vBox: try node["VBox"].value(),
-			measures: try node[Measure.key].value()
+			measures: try node[Measure.nodeKey].value()
 		)
 	}
 }

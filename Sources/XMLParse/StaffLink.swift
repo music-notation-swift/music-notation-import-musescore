@@ -17,7 +17,7 @@ import SWXMLHash
 //</Staff>
 
 public struct StaffLink: XMLObjectDeserialization {
-	static let key = "linkedTo"
+	static let nodeKey = "linkedTo"
 	var id: Int
 	var staffLink: Int
 	var name: String
@@ -33,7 +33,7 @@ public struct StaffLink: XMLObjectDeserialization {
 			id: attribute,
 			staffLink: try node["staffLink"].value(),
 			name: try node["name"].value(),
-			staffType: try node[StaffType.key].value(),
+			staffType: try node[StaffType.nodeKey].value(),
 			defaultClef: try node["defaultClef"].value()
 		)
 	}

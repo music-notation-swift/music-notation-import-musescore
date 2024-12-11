@@ -9,7 +9,7 @@
 import SWXMLHash
 
 public struct Part: XMLObjectDeserialization {
-	static let key = "Part"
+	static let nodeKey = "Part"
 
 	var id: Int
 	var staffStubs: [StaffLink]
@@ -23,9 +23,9 @@ public struct Part: XMLObjectDeserialization {
 
 		return Part(
 			id: id,
-			staffStubs: try node[StaffLink.key].value(),
+			staffStubs: try node[StaffLink.nodeKey].value(),
 			trackName: try node["name"].value(),
-			instrument: try node[Instrument.key].value()
+			instrument: try node[Instrument.nodeKey].value()
 		)
 	}
 }

@@ -8,8 +8,26 @@
 
 import SWXMLHash
 
+//<root>
+// <open>1</open>
+// <metaTag name="arranger">test arranger</metaTag>
+// <metaTag name="composer">Composer / arranger</metaTag>
+// <metaTag name="copyright"></metaTag>
+// <metaTag name="creationDate">2024-07-15</metaTag>
+// <metaTag name="lyricist"></metaTag>
+// <metaTag name="movementNumber"></metaTag>
+// <metaTag name="movementTitle"></metaTag>
+// <metaTag name="platform">Apple Macintosh</metaTag>
+// <metaTag name="source"></metaTag>
+// <metaTag name="subtitle">Subtitle</metaTag>
+// <metaTag name="translator"></metaTag>
+// <metaTag name="workNumber"></metaTag>
+// <metaTag name="workTitle">Untitled score</metaTag>
+// <Order id="orchestral">
+//</root>
+
 public enum MetaTag: XMLObjectDeserialization {
-	static let key = "metaTag"
+	static let nodeKey = "metaTag"
 
 	case arranger(String)
 	case composer(String)

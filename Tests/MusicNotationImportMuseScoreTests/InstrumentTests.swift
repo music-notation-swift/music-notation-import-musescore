@@ -13,7 +13,7 @@ import Testing
 @Suite final class InstrumentTests {
 	@Test func parseInstrument() async throws {
 		let xmlParser = XMLHash.parse(#"<instrument id="electric-guitar-tablature"><family id="guitars">Guitars</family></instrument>"#)
-		let instrument: Instrument = try xmlParser[Instrument.key].value()
+		let instrument: Instrument = try xmlParser[Instrument.nodeKey].value()
 		#expect(instrument.id == "electric-guitar-tablature")
 		#expect(instrument.family.id == "guitars")
 	}

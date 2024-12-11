@@ -21,7 +21,7 @@ public struct Section: XMLObjectDeserialization {
 			brackets: try node.value(ofAttribute: "brackets"),
 			barLineSpan: try node.value(ofAttribute: "barLineSpan"),
 			thinBrackets: try node.value(ofAttribute: "thinBrackets"),
-			families: node[Family.key].value()
+			families: node[Family.nodeKey].value()
 		)
 	}
 }

@@ -9,7 +9,7 @@
 import SWXMLHash
 
 public struct Order: XMLObjectDeserialization {
-	static let key = "Order"
+	static let nodeKey = "Order"
 
 	var id: String
 	var name: String

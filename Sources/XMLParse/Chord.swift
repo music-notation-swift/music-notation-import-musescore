@@ -23,7 +23,7 @@ import SWXMLHash
 //</Chord>
 
 public struct Chord: XMLObjectDeserialization {
-	static let key = "Chord"
+	static let nodeKey = "Chord"
 
 	var eid: Int
 	var linkedMain: Bool
@@ -35,7 +35,7 @@ public struct Chord: XMLObjectDeserialization {
 			eid: try node["eid"].value(),
 			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
 			durationType: try node["durationType"].value(),
-			note: try node[Note.key].value()
+			note: try node[Note.nodeKey].value()
 		)
 	}
 }

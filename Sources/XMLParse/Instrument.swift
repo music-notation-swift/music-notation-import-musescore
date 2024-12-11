@@ -13,14 +13,14 @@ import SWXMLHash
 //</instrument>
 
 public struct Instrument: XMLObjectDeserialization {
-	static let key = "instrument"
+	static let nodeKey = "instrument"
 	var id: String
 	var family: Family
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Instrument(
 			id: try node.value(ofAttribute: "id"),
-			family: try node[Family.key].value()
+			family: try node[Family.nodeKey].value()
 		)
 	}
 }

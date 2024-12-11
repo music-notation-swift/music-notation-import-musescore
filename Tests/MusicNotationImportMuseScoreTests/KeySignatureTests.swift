@@ -20,7 +20,7 @@ import Testing
 		</KeySig>
 		"""#
 		let xmlParser = XMLHash.parse(xmlString)
-		let instrument: KeySignature = try xmlParser[KeySignature.key].value()
+		let instrument: KeySignature = try xmlParser[KeySignature.nodeKey].value()
 		#expect(instrument.eid == 167503724567)
 //		#expect(instrument.family.id == 167503724567)
 	}

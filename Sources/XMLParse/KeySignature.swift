@@ -15,7 +15,7 @@ import SWXMLHash
 //</KeySig>
 
 public struct KeySignature: XMLObjectDeserialization {
-	static let key = "KeySig"
+	static let nodeKey = "KeySig"
 	var eid: Int
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {

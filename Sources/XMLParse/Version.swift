@@ -7,6 +7,7 @@
 //
 
 public struct Version {
+	static let nodeKey = "programVersion"
 	var major: Int
 	var minor: Int
 	var patch: Int

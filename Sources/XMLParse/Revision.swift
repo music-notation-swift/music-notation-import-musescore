@@ -9,6 +9,7 @@
 import SWXMLHash
 
 public struct Revision: XMLObjectDeserialization {
+	static let nodeKey = "programRevision"
 	var value: UInt64
 
 	static func withString(_ string: String) throws -> Self {

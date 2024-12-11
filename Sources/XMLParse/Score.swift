@@ -9,7 +9,7 @@
 import SWXMLHash
 
 public struct Score: XMLObjectDeserialization {
-	static let key = "Score"
+	static let nodeKey = "Score"
 
 	var division: Int
 	var showInvisible: Bool
@@ -30,10 +30,10 @@ public struct Score: XMLObjectDeserialization {
 			showFrames: node["showFrames"].value(),
 			showMargins: node["showMargins"].value(),
 			open: node["open"].value(),
-			metaTags: node["metaTag"].value(),
-			order: node[Order.key].value(),
-			part: node[Part.key].value(),
-			staves: node[Staff.key].value()
+			metaTags: node[MetaTag.nodeKey].value(),
+			order: node[Order.nodeKey].value(),
+			part: node[Part.nodeKey].value(),
+			staves: node[Staff.nodeKey].value()
 		)
 	}
 }
