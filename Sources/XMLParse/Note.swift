@@ -42,6 +42,7 @@ public struct Note: XMLObjectDeserialization {
 
 	var eid: Int
 	var linkedMain: Bool
+	var spanner: Spanner
 	var pitch: Int
 	var tpc: Int
 	var fret: Int
@@ -51,6 +52,7 @@ public struct Note: XMLObjectDeserialization {
 		Note(
 			eid: try node["eid"].value(),
 			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
+			spanner: try node[Spanner.nodeKey].value(),
 			pitch: try node["pitch"].value(),
 			tpc: try node["tpc"].value(),
 			fret: try node["fret"].value(),
