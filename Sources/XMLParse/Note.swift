@@ -42,7 +42,7 @@ public struct Note: XMLObjectDeserialization {
 
 	var eid: Int
 	var linkedMain: Bool
-	var spanner: Spanner
+	var spanner: Spanner?
 	var pitch: Int
 	var tpc: Int
 	var fret: Int

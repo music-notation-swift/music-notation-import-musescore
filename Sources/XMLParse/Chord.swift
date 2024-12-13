@@ -13,12 +13,12 @@ import SWXMLHash
 //  <linkedMain />
 //  <durationType>quarter</durationType>
 //  <Note>
-//	<eid>180388626453</eid>
-//	<linkedMain />
-//	<pitch>40</pitch>
-//	<tpc>18</tpc>
-//	<fret>0</fret>
-//	<string>5</string>
+//	  <eid>180388626453</eid>
+//	  <linkedMain />
+//	  <pitch>40</pitch>
+//	  <tpc>18</tpc>
+//	  <fret>0</fret>
+//	  <string>5</string>
 //  </Note>
 //</Chord>
 
