@@ -8,18 +8,25 @@
 
 import SWXMLHash
 
-//<next>
 //  <location>
 //	  <fractions>1/4</fractions>
 //	</location>
-//</next>
+
+//  <location>
+//    <measures>1</measures>
+//	  <fractions>-1/4</fractions>
+//	</location>
 
 public struct Location: XMLObjectDeserialization {
 	static let nodeKey = "location"
 
+	var measures: Int?
 	var fractions: String
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		Location(fractions: try node["fractions"].value())
+		Location(
+			measures: try node["measures"].value(),
+			fractions: try node["fractions"].value()
+		)
 	}
 }
