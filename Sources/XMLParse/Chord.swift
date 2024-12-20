@@ -34,7 +34,7 @@ public struct Chord: XMLObjectDeserialization {
 		Chord(
 			eid: try node["eid"].value(),
 			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
-			durationType: try node["durationType"].value(),
+			durationType: try node[Duration.nodeKey].value(),
 			note: try node[Note.nodeKey].value()
 		)
 	}

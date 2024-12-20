@@ -13,26 +13,26 @@ import Testing
 @Suite final class DurationTests {
 	@Test func quarterDuration() async throws {
 		let xmlParser = XMLHash.parse("<durationType>quarter</durationType>")
-		let duration: Duration = try xmlParser["durationType"].value()
+		let duration: Duration = try xmlParser[Duration.nodeKey].value()
 		#expect(duration == .quarter)
 	}
 
 	@Test func halfDuration() async throws {
 		let xmlParser = XMLHash.parse("<durationType>half</durationType>")
-		let duration: Duration = try xmlParser["durationType"].value()
+		let duration: Duration = try xmlParser[Duration.nodeKey].value()
 		#expect(duration == .half)
 	}
 
 	@Test func measureDuration() async throws {
 		let xmlParser = XMLHash.parse("<durationType>measure</durationType>")
-		let duration: Duration = try xmlParser["durationType"].value()
+		let duration: Duration = try xmlParser[Duration.nodeKey].value()
 		#expect(duration == .measure)
 	}
 
 	@Test func badDuration() async throws {
 		let xmlParser = XMLHash.parse("<durationType>bad</durationType>")
 		#expect(throws: DurationParseError.self) {
-			_  = try xmlParser["durationType"].value() as Duration
+			_ = try xmlParser[Duration.nodeKey].value() as Duration
 		}
 	}
 }

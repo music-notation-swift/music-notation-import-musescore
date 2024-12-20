@@ -8,6 +8,12 @@
 
 import SWXMLHash
 
+//<Text>
+//  <eid>8589934597</eid>
+//  <style>title</style>
+//  <text>FAR BEYOND THE SUN</text>
+//</Text>
+
 public struct Text: XMLObjectDeserialization {
 	static let nodeKey = "Text"
 	var eid: Int
