@@ -17,11 +17,11 @@ import SWXMLHash
 //	  <fractions>-1/4</fractions>
 //	</location>
 
-public struct Location: XMLObjectDeserialization {
+public struct Location: XMLObjectDeserialization, Sendable {
 	static let nodeKey = "location"
 
 	var measures: Int?
-	var fractions: String
+	var fractions: String?
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Location(
@@ -29,4 +29,15 @@ public struct Location: XMLObjectDeserialization {
 			fractions: try node["fractions"].value()
 		)
 	}
+
+	// Should have one of more of the location values
+	public func validate() throws {
+		if measures == nil && fractions == nil {
+			throw LocationParsingError.locationValidationFailure
+		}
+	}
+}
+
+public enum LocationParsingError: Error {
+	case locationValidationFailure
 }

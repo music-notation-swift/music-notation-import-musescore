@@ -8,32 +8,239 @@
 
 import SWXMLHash
 
-//  <Spanner type="Tie">
-//	  <Tie>
-//	    <eid>231928234015</eid>
-//	    <linkedMain />
-//	  </Tie>
-//	  <next>
-//	    <location>
-//	      <fractions>1/4</fractions>
-//	    </location>
-//    </next>
-//</Spanner>
-
-public struct Spanner: XMLObjectDeserialization {
+public struct Spanner: XMLObjectDeserialization, Sendable {
 	static let nodeKey = "Spanner"
 
-	enum SpannerType {
-		case tie
+	enum SpannerType: Sendable {
+		static let nodeKey = "type"
+
+		case hairpin(Hairpin)
+		case ottava(Ottava)
+		case pedal(Pedal)
+		case slur(Slur?)
+		case textline(TextLine)
+		case tie(Tie?)
+		case trill(Trill)
+		case volta(Volta)
 	}
 
-	var tie: Tie
-	var next: Location
+	var spannerType: SpannerType
+	var previous: Location?
+	var next: Location?
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		Spanner(
-			tie: try node[Tie.nodeKey].value(),
-			next: try node[Location.nodeKey].value()
+		let propertyAttribute: String = try node.value(ofAttribute: SpannerType.nodeKey)
+		let spannerType: SpannerType = switch propertyAttribute {
+		case Hairpin.nodeKey:
+			.hairpin(try node[Hairpin.nodeKey].value())
+		case Ottava.nodeKey:
+			.ottava(try node[Ottava.nodeKey].value())
+		case Pedal.nodeKey:
+			.pedal(try node[Pedal.nodeKey].value())
+		case Slur.nodeKey:
+			.slur(try node[Slur.nodeKey].value())
+		case TextLine.nodeKey:
+			.textline(try node[TextLine.nodeKey].value())
+		case Tie.nodeKey:
+			.tie(try node[Tie.nodeKey].value())
+		case Trill.nodeKey:
+			.trill(try node[Trill.nodeKey].value())
+		case Volta.nodeKey:
+			.volta(try node[Volta.nodeKey].value())
+		default:
+			throw SpannerParseError.unsupportedPropertyAttribute(propertyAttribute)
+		}
+
+		return Spanner(
+			spannerType: spannerType,
+			previous: try node["prev"]["location"].value(),
+			next: try node["next"]["location"].value()
 		)
 	}
 }
+
+// MARK: - Spanner Types
+extension Spanner {
+	//<Spanner type="HairPin">
+	//  <HairPin>
+	//    <subtype>2</subtype>
+	//    <endText></endText>
+	//    <lineVisible>0</lineVisible>
+	//    <continueText></continueText>
+	//  </HairPin>
+	//  <next>
+	//    <location>
+	//      <measures>18</measures>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct Hairpin: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "HairPin"
+
+		enum HairpinType {
+			case crescendoHairpin
+			case decrescendoHairpin
+			case crescendoLine
+			case decrescendoLine
+			case invalid
+		}
+
+		var subtype: Int
+		var endText: String
+		var continueText: String
+
+		static func empty() -> Self {
+			Hairpin(subtype: 0, endText: "", continueText: "")
+		}
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Hairpin(
+				subtype: try node["subtype"].value(),
+				endText: try node["endText"].value(),
+				continueText: try node["continueText"].value()
+			)
+		}
+	}
+
+	//<Spanner type="Ottava">
+	//  <Ottava>
+	//    <subtype>8va</subtype>
+	//  </Ottava>
+	//  <next>
+	//    <location>
+	//      <measures>7</measures>
+	//      <fractions>-5/16</fractions>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct Ottava: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Ottava"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Ottava()
+		}
+	}
+
+	public struct Pedal: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Pedal"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Pedal()
+		}
+	}
+
+	//<Spanner type="Slur">
+	//  <prev>
+	//    <location>
+	//      <fractions>-1/4</fractions>
+	//    </location>
+	//  </prev>
+	//</Spanner>
+	public struct Slur: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Slur"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Slur()
+		}
+	}
+
+	public struct TextLine: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "TextLine"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			TextLine()
+		}
+	}
+
+	//<Spanner type="Tie">
+	//  <Tie>
+	//    <eid>231928234015</eid>
+	//    <linkedMain />
+	//  </Tie>
+	//  <next>
+	//    <location>
+	//      <fractions>1/4</fractions>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct Tie: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Tie"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Tie()
+		}
+	}
+
+	//<Spanner type="Trill">
+	//  <Trill>
+	//    <subtype>trill</subtype>
+	//    <lineWidth>0.24765</lineWidth>
+	//  </Trill>
+	//  <next>
+	//    <location>
+	//      <measures>4</measures>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct Trill: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Trill"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Trill()
+		}
+	}
+
+	//<Spanner type="Volta">
+	//  <Volta>
+	//    <endHookType>1</endHookType>
+	//    <beginText>1.</beginText>
+	//    <endings>1</endings>
+	//  </Volta>
+	//  <next>
+	//    <location>
+	//    <measures>12</measures>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct Volta: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Volta"
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Volta()
+		}
+	}
+}
+
+// Case Equality. In this case it means the enums are equal, but the associated values are ignored
+infix operator =~
+extension Spanner.SpannerType {
+	public static func =~ (lhs: Spanner.SpannerType, rhs: Spanner.SpannerType) -> Bool {
+		switch (lhs, rhs) {
+		case (.hairpin(_), .hairpin(_)):
+			return true
+		case (.ottava(_), .ottava(_)):
+			return true
+		case (.pedal(_), .pedal(_)):
+			return true
+		case (.slur(_), .slur(_)):
+			return true
+		case (.textline(_), .textline(_)):
+			return true
+		case (.tie(_), .tie(_)):
+			return true
+		case (.trill(_), .trill(_)):
+			return true
+		case (.volta(_), .volta(_)):
+			return true
+		default:
+			return false
+		}
+	}
+}
+
+// MARK: - Parser Error
+
+public enum SpannerParseError: Error {
+	case unsupportedPropertyAttribute(String)
+}
+

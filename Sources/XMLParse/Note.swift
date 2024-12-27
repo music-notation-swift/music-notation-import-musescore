@@ -41,7 +41,7 @@ public struct Note: XMLObjectDeserialization {
 	static let nodeKey = "Note"
 
 	var eid: Int
-	var linkedMain: Bool
+	var linkedMain: Bool?
 	var spanner: Spanner?
 	var pitch: Int
 	var tpc: Int
