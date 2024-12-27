@@ -16,9 +16,9 @@ import Testing
 <Spanner type="HairPin">
   <HairPin>
     <subtype>2</subtype>
-    <endText></endText>
+    <endText>et</endText>
     <lineVisible>0</lineVisible>
-    <continueText></continueText>
+    <continueText>ct</continueText>
   </HairPin>
   <next>
     <location>
@@ -31,10 +31,12 @@ import Testing
 		let hairpinSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
 		#expect(hairpinSpanner.spannerType =~ Spanner.SpannerType.hairpin(Spanner.Hairpin.empty()))
 
-//		if case let hairpinSpanner.spannerType = hairpin {
-//			#expect(hairpin.subtype == 2)
-//		} else {
-//			#expect(false)
-//		}
+		if case Spanner.SpannerType.hairpin(let hairpin) = hairpinSpanner.spannerType {
+			#expect(hairpin.subtype == 2)
+			#expect(hairpin.endText == "et")
+			#expect(hairpin.continueText == "ct")
+		} else {
+			#expect(Bool(false))
+		}
 	}
 }
