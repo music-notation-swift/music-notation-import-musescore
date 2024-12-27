@@ -170,15 +170,21 @@ extension Spanner {
 	public struct Tie: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Tie"
 
+		var eid: Int
+		var linkedMain: Bool?
+
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
-			Tie()
+			Tie(
+				eid: try node["eid"].value(),
+				linkedMain: try node["linkedMain"].value(found: true, notFound: false)
+			)
 		}
 	}
 
 	//<Spanner type="Trill">
 	//  <Trill>
 	//    <subtype>trill</subtype>
-	//    <lineWidth>0.24765</lineWidth>
+	//	  <lineWidth>0.24765</lineWidth>
 	//  </Trill>
 	//  <next>
 	//    <location>
@@ -189,8 +195,14 @@ extension Spanner {
 	public struct Trill: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Trill"
 
+		var subtype: String
+		var lineWidth: Double
+
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
-			Trill()
+			Trill(
+				subtype: try node["subtype"].value(),
+				lineWidth: try node["lineWidth"].value()
+			)
 		}
 	}
 
@@ -209,8 +221,16 @@ extension Spanner {
 	public struct Volta: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Volta"
 
+		var endHookType: Int
+		var beginText: String
+		var endings: String
+
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
-			Volta()
+			Volta(
+				endHookType: try node["endHookType"].value(),
+				beginText: try node["beginText"].value(),
+				endings: try node["endings"].value()
+			)
 		}
 	}
 }

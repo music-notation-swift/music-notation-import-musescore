@@ -96,13 +96,13 @@ import Testing
 		let xmlString = #"""
 <Spanner type="Tie">
   <Tie>
-    <eid>231928234015</eid>
-    <linkedMain />
+ <eid>231928234015</eid>
+ <linkedMain />
   </Tie>
   <next>
-	<location>
-	  <fractions>1/4</fractions>
-	</location>
+ <location>
+   <fractions>1/4</fractions>
+ </location>
   </next>
 </Spanner>
 """#
@@ -116,5 +116,63 @@ import Testing
 
 		#expect(tieSpanner.previous == nil)
 		#expect(tieSpanner.next?.fractions == "1/4")
+	}
+
+	@Test func trillParse() async throws {
+		let xmlString = #"""
+<Spanner type="Trill">
+  <Trill>
+	<subtype>trill</subtype>
+	<lineWidth>0.24765</lineWidth>
+  </Trill>
+  <next>
+ <location>
+   <measures>4</measures>
+ </location>
+  </next>
+</Spanner>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let trillSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
+		if case Spanner.SpannerType.trill(let trill) = trillSpanner.spannerType {
+			#expect(trill != nil)
+			#expect(trill.subtype == "trill")
+			#expect(trill.lineWidth == 0.24765)
+		} else {
+			#expect(Bool(false))
+		}
+
+		#expect(trillSpanner.previous == nil)
+		#expect(trillSpanner.next?.measures == 4)
+	}
+
+	@Test func voltaParse() async throws {
+		let xmlString = #"""
+<Spanner type="Volta">
+  <Volta>
+    <endHookType>1</endHookType>
+    <beginText>1.</beginText>
+    <endings>1</endings>
+  </Volta>
+  <next>
+	<location>
+	  <measures>12</measures>
+	</location>
+  </next>
+</Spanner>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let voltaSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
+		if case Spanner.SpannerType.volta(let volta) = voltaSpanner.spannerType {
+			#expect(volta != nil)
+			#expect(volta.endHookType == 1)
+			#expect(volta.beginText == "1.")
+			#expect(volta.endings == "1")
+		} else {
+			#expect(Bool(false))
+		}
+
+		#expect(voltaSpanner.previous == nil)
+		#expect(voltaSpanner.next?.measures == 12)
 	}
 }
