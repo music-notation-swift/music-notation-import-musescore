@@ -17,7 +17,7 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 		case hairpin(Hairpin)
 		case ottava(Ottava)
 		case pedal(Pedal)
-		case slur(Slur?)
+		case slur(Slur)
 		case textline(TextLine)
 		case tie(Tie?)
 		case trill(Trill)
@@ -38,7 +38,7 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 		case Pedal.nodeKey:
 			.pedal(try node[Pedal.nodeKey].value())
 		case Slur.nodeKey:
-			.slur(try node[Slur.nodeKey].value())
+			.slur(Slur())
 		case TextLine.nodeKey:
 			.textline(try node[TextLine.nodeKey].value())
 		case Tie.nodeKey:
@@ -116,11 +116,18 @@ extension Spanner {
 	public struct Ottava: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Ottava"
 
+		var subtype: String
+
+		static func empty() -> Self {
+			Ottava(subtype: "")
+		}
+
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
-			Ottava()
+			Ottava(subtype: try node["subtype"].value())
 		}
 	}
 
+	// Don't have an example of this yet.
 	public struct Pedal: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Pedal"
 
@@ -138,10 +145,6 @@ extension Spanner {
 	//</Spanner>
 	public struct Slur: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Slur"
-
-		public static func deserialize(_ node: XMLIndexer) throws -> Self {
-			Slur()
-		}
 	}
 
 	public struct TextLine: XMLObjectDeserialization, Sendable {

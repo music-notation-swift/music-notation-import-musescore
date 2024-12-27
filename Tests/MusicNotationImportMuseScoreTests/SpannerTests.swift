@@ -15,21 +15,23 @@ import Testing
 		let xmlString = #"""
 <Spanner type="HairPin">
   <HairPin>
-    <subtype>2</subtype>
-    <endText>et</endText>
-    <lineVisible>0</lineVisible>
-    <continueText>ct</continueText>
+ <subtype>2</subtype>
+ <endText>et</endText>
+ <lineVisible>0</lineVisible>
+ <continueText>ct</continueText>
   </HairPin>
   <next>
-    <location>
-      <measures>18</measures>
-    </location>
+ <location>
+   <measures>18</measures>
+ </location>
   </next>
 </Spanner>
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let hairpinSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
 		#expect(hairpinSpanner.spannerType =~ Spanner.SpannerType.hairpin(Spanner.Hairpin.empty()))
+		#expect(hairpinSpanner.next?.measures == 18)
+		#expect(hairpinSpanner.previous == nil)
 
 		if case Spanner.SpannerType.hairpin(let hairpin) = hairpinSpanner.spannerType {
 			#expect(hairpin.subtype == 2)
@@ -38,5 +40,55 @@ import Testing
 		} else {
 			#expect(Bool(false))
 		}
+	}
+
+	@Test func ottava() async throws {
+		let xmlString = #"""
+<Spanner type="Ottava">
+  <Ottava>
+ <subtype>8va</subtype>
+  </Ottava>
+  <next>
+ <location>
+   <measures>6</measures>
+	  <fractions>-5/16</fractions>
+ </location>
+  </next>
+</Spanner>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let ottavaSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
+		#expect(ottavaSpanner.spannerType =~ Spanner.SpannerType.ottava(Spanner.Ottava.empty()))
+		#expect(ottavaSpanner.next?.measures == 6)
+		#expect(ottavaSpanner.next?.fractions == "-5/16")
+		#expect(ottavaSpanner.previous == nil)
+
+		if case Spanner.SpannerType.ottava(let ottava) = ottavaSpanner.spannerType {
+			#expect(ottava.subtype == "8va")
+		} else {
+			#expect(Bool(false))
+		}
+	}
+
+	@Test func slurParse() async throws {
+		let xmlString = #"""
+<Spanner type="Slur">
+  <prev>
+	<location>
+	  <fractions>-1/4</fractions>
+	</location>
+  </prev>
+</Spanner>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let slurSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
+		if case Spanner.SpannerType.slur(let slur) = slurSpanner.spannerType {
+			#expect(slur != nil)
+		} else {
+			#expect(Bool(false))
+		}
+
+		#expect(slurSpanner.next == nil)
+		#expect(slurSpanner.previous?.fractions == "-1/4")
 	}
 }
