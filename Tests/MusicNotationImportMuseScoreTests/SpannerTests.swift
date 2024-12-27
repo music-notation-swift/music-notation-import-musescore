@@ -51,7 +51,7 @@ import Testing
   <next>
  <location>
    <measures>6</measures>
-	  <fractions>-5/16</fractions>
+   <fractions>-5/16</fractions>
  </location>
   </next>
 </Spanner>
@@ -74,9 +74,9 @@ import Testing
 		let xmlString = #"""
 <Spanner type="Slur">
   <prev>
-	<location>
-	  <fractions>-1/4</fractions>
-	</location>
+ <location>
+   <fractions>-1/4</fractions>
+ </location>
   </prev>
 </Spanner>
 """#
@@ -90,5 +90,31 @@ import Testing
 
 		#expect(slurSpanner.next == nil)
 		#expect(slurSpanner.previous?.fractions == "-1/4")
+	}
+
+	@Test func tieParse() async throws {
+		let xmlString = #"""
+<Spanner type="Tie">
+  <Tie>
+    <eid>231928234015</eid>
+    <linkedMain />
+  </Tie>
+  <next>
+	<location>
+	  <fractions>1/4</fractions>
+	</location>
+  </next>
+</Spanner>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let tieSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
+		if case Spanner.SpannerType.tie(let tie) = tieSpanner.spannerType {
+			#expect(tie != nil)
+		} else {
+			#expect(Bool(false))
+		}
+
+		#expect(tieSpanner.previous == nil)
+		#expect(tieSpanner.next?.fractions == "1/4")
 	}
 }

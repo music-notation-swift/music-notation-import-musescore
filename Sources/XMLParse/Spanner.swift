@@ -147,6 +147,7 @@ extension Spanner {
 		static let nodeKey = "Slur"
 	}
 
+	// Don't have an example of this yet.
 	public struct TextLine: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "TextLine"
 
