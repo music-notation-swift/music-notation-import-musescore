@@ -92,12 +92,12 @@ public struct Part: XMLObjectDeserialization {
 		static let nodeKey = "Staff"
 
 		var id: Int
-		var linkedTo: Int
+		var linkedTo: Int?
 		var staffType: StaffType
 		var defaultClef: String?
 		var defaultConcertClef: String?
 		var defaultTransposingClef: String?
-		var bracket: String?
+		var bracket: Bracket?
 		var barSpanLine: Int?
 		var instrument: Instrument?
 	}
@@ -115,9 +115,9 @@ public struct Part: XMLObjectDeserialization {
 		var maxPitchA: Int
 		var instrumentID: String
 		var clef: [String]?			// One clef per staff: guitar has treble, bass, tab (I think)
-		var singleNoteDynamics: Int
+		var singleNoteDynamics: Int?
 		var stringData: StringData?
-		var channels: [Channel]
+		var channels: [Channel]?
 		var transposeDiatonic: Int?
 		var transposeChromatic: Int?
 		var concertClef: String?
@@ -141,8 +141,74 @@ public struct Part: XMLObjectDeserialization {
 		return Part(
 			id: id,
 			staves: try node[Part.Staff.nodeKey].value(),
-			trackName: try node["name"].value(),
+			trackName: try node["trackName"].value(),
 			instrument: try node[Part.Instrument.nodeKey].value()
+		)
+	}
+}
+
+extension Part.Staff {
+	public static func deserialize(_ node: XMLIndexer) throws -> Self {
+		let idString: String = try node.value(ofAttribute: "id")
+		let id = Int(idString)
+		guard let id else { throw PartError.partIdConversionError }
+
+		let linkedTo = try node["linkedTo"].value() as Int?
+		let staffType = try node[StaffType.nodeKey].value() as StaffType
+		let bracket = try node[Bracket.nodeKey].value() as Bracket?
+
+		return Part.Staff(
+			id: id,
+			linkedTo: linkedTo,
+			staffType: staffType,
+			defaultClef: try node["defaultClef"].value(),
+			defaultConcertClef: try node["defaultConcertClef"].value(),
+			defaultTransposingClef: try node["defaultTransposingClef"].value(),
+			bracket: bracket,
+			barSpanLine: try node["barSpanLine"].value(),
+			instrument: try node[Instrument.nodeKey].value()
+		)
+	}
+}
+
+extension Part.Instrument {
+	public static func deserialize(_ node: XMLIndexer) throws -> Self {
+		let longName = try node["longName"].value() as String
+		let shortName = try node["shortName"].value() as String
+		let trackName = try node["trackName"].value() as String
+		let minPitchP = try node["minPitchP"].value() as Int
+		let maxPitchP = try node["maxPitchP"].value() as Int
+		let minPitchA = try node["minPitchA"].value() as Int
+		let maxPitchA = try node["maxPitchA"].value() as Int
+		let instrumentID = try node["maxPitchA"].value() as String
+		let clef = try node["clef"].value() as [String]?
+		let singleNoteDynamics = try node["singleNoteDynamics"].value() as Int?
+		let stringData = try node["stringData"].value() as StringData?
+		let channels = try node["channels"].value() as [Channel]?
+		let transposeDiatonic = try node["transposeDiatonic"].value() as Int?
+		let transposeChromatic = try node["transposeChromatic"].value() as Int?
+		let concertClef = try node["concertClef"].value() as String?
+		let transposingClef = try node["transposingClef"].value() as String?
+		let articulations = try node["articulations"].value() as [Articulation]?
+
+		return Part.Instrument(
+			longName: longName,
+			shortName: shortName,
+			trackName: trackName,
+			minPitchP: minPitchP,
+			maxPitchP: maxPitchP,
+			minPitchA: minPitchA,
+			maxPitchA: maxPitchA,
+			instrumentID: instrumentID,
+			clef: clef,
+			singleNoteDynamics: singleNoteDynamics,
+			stringData: stringData,
+			channels: channels,
+			transposeDiatonic: transposeDiatonic,
+			transposeChromatic: transposeChromatic,
+			concertClef: concertClef,
+			transposingClef: transposingClef,
+			articulations: articulations
 		)
 	}
 }

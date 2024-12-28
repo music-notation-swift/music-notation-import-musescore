@@ -27,8 +27,8 @@ public struct StringData: XMLObjectDeserialization {
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		StringData(
-			frets: 0,
-			strings: [44, 45, 50, 55, 59, 64]
+			frets: try node["frets"].value(),
+			strings: try node["strings"].value()
 		)
 	}
 }

@@ -12,7 +12,7 @@ import Testing
 
 
 @Suite final class PartTests {
-	@Test func pitchedType() async throws {
+	@Test func partParse() async throws {
 		let xmlString = #"""
 <Part id="1">
   <Staff id="1">
