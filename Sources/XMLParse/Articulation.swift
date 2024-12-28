@@ -30,7 +30,7 @@ public struct Articulation: XMLObjectDeserialization {
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Articulation(
-			name: try node["name"].value(),
+			name: node.value(ofAttribute: "name"),
 			velocity: try node["velocity"].value(),
 			gateTime: try node["gateTime"].value()
 		)
