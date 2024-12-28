@@ -14,7 +14,7 @@ public struct Bracket: XMLObjectDeserialization {
 	var type: Int
 	var span: Int
 	var column: Int
-	var visible: Int
+	var visible: Bool
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Bracket(
