@@ -30,23 +30,38 @@ import SWXMLHash
 //  <midiChannel>2</midiChannel>
 //</Channel>
 
-// INCOMPLETE
 public struct Channel: XMLObjectDeserialization {
 	static let nodeKey = "Channel"
 
+	var name: String?
 	var program: Int
 	var synthesizer: String
-	var controller: (Int, Int)?
+	var controllers: [ChannelController]?
 	var midiPort: Int?
 	var midiChannel: Int?
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Channel(
-			program: try node["program"].value(),
+			name: node.value(ofAttribute: "name"),
+			program: try node["program"].value(ofAttribute: "value"),
 			synthesizer: try node["synti"].value(),
-			controller: nil,
+			controllers: try node[ChannelController.nodeKey].value(),
 			midiPort: try node["midiPort"].value(),
 			midiChannel: try node["midiChannel"].value()
+		)
+	}
+}
+
+public struct ChannelController: XMLObjectDeserialization {
+	static let nodeKey = "controller"
+
+	var ctrl: Int
+	var value: Int
+
+	public static func deserialize(_ node: XMLIndexer) throws -> Self {
+		ChannelController(
+			ctrl: try node.value(ofAttribute: "ctrl"),
+			value: try node.value(ofAttribute: "value")
 		)
 	}
 }

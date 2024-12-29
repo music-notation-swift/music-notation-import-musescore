@@ -27,14 +27,14 @@ public struct Chord: XMLObjectDeserialization {
 
 	var eid: Int
 	var linkedMain: Bool
-	var durationType: Duration
+	var durationType: DurationType
 	var note: Note
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Chord(
 			eid: try node["eid"].value(),
 			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
-			durationType: try node[Duration.nodeKey].value(),
+			durationType: try node[DurationType.nodeKey].value(),
 			note: try node[Note.nodeKey].value()
 		)
 	}

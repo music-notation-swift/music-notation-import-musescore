@@ -1,5 +1,5 @@
 //
-//	Duration.swift
+//	DurationType.swift
 //	music-notation-import-musescore
 //
 //	Created by Steven Woolgar on 2024-10-12.
@@ -10,8 +10,9 @@ import SWXMLHash
 
 //<durationType>quarter</durationType>
 
-public enum Duration: XMLObjectDeserialization {
+public enum DurationType: XMLObjectDeserialization {
 	static let nodeKey = "durationType"
+	case eighth
 	case quarter
 	case half
 	case measure
@@ -19,6 +20,8 @@ public enum Duration: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		let propertyAttribute: String = try node.value()
 		switch propertyAttribute {
+		case "eighth":
+			return .eighth
 		case "quarter":
 			return .quarter
 		case "half":
@@ -26,11 +29,11 @@ public enum Duration: XMLObjectDeserialization {
 		case "measure":
 			return .measure
 		default:
-			throw DurationParseError.unsupportedDuration
+			throw DurationTypeParseError.unsupportedDurationType
 		}
 	}
 }
 
-public enum DurationParseError: Error {
-	case unsupportedDuration
+public enum DurationTypeParseError: Error {
+	case unsupportedDurationType
 }

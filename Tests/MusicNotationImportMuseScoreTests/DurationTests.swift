@@ -10,29 +10,29 @@
 import SWXMLHash
 import Testing
 
-@Suite final class DurationTests {
+@Suite final class DurationTypeTests {
 	@Test func quarterDuration() async throws {
 		let xmlParser = XMLHash.parse("<durationType>quarter</durationType>")
-		let duration: Duration = try xmlParser[Duration.nodeKey].value()
+		let duration: DurationType = try xmlParser[DurationType.nodeKey].value()
 		#expect(duration == .quarter)
 	}
 
-	@Test func halfDuration() async throws {
+	@Test func halfDurationType() async throws {
 		let xmlParser = XMLHash.parse("<durationType>half</durationType>")
-		let duration: Duration = try xmlParser[Duration.nodeKey].value()
+		let duration: DurationType = try xmlParser[DurationType.nodeKey].value()
 		#expect(duration == .half)
 	}
 
-	@Test func measureDuration() async throws {
+	@Test func measureDurationType() async throws {
 		let xmlParser = XMLHash.parse("<durationType>measure</durationType>")
-		let duration: Duration = try xmlParser[Duration.nodeKey].value()
+		let duration: DurationType = try xmlParser[DurationType.nodeKey].value()
 		#expect(duration == .measure)
 	}
 
-	@Test func badDuration() async throws {
+	@Test func badDurationType() async throws {
 		let xmlParser = XMLHash.parse("<durationType>bad</durationType>")
-		#expect(throws: DurationParseError.self) {
-			_ = try xmlParser[Duration.nodeKey].value() as Duration
+		#expect(throws: DurationTypeParseError.self) {
+			_ = try xmlParser[DurationType.nodeKey].value() as DurationType
 		}
 	}
 }
