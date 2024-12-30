@@ -96,13 +96,13 @@ import Testing
 		let xmlString = #"""
 <Spanner type="Tie">
   <Tie>
- <eid>231928234015</eid>
- <linkedMain />
+    <eid>231928234015</eid>
+    <linkedMain />
   </Tie>
   <next>
- <location>
-   <fractions>1/4</fractions>
- </location>
+    <location>
+      <fractions>1/4</fractions>
+    </location>
   </next>
 </Spanner>
 """#

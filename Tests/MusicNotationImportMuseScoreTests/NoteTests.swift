@@ -40,30 +40,71 @@ import Testing
 //</Note>
 
 @Suite final class NoteTests {
-	@Test func eid() async throws {
+	@Test func noteParseSpannerTie() async throws {
 		let xmlString = #"""
 <Note>
   <eid>227633266709</eid>
   <linkedMain />
   <Spanner type="Tie">
-		<Tie>
-		  	<eid>231928234015</eid>
-	  		<linkedMain />
-		</Tie>
-		<next>
-	  		<location>
-				<fractions>1/4</fractions>
-	  		</location>
-		</next>
+    <Tie>
+	   <eid>231928234015</eid>
+	   <linkedMain />
+    </Tie>
+    <next>
+	   <location>
+	     <fractions>1/4</fractions>
+	   </location>
+    </next>
   </Spanner>
   <pitch>64</pitch>
   <tpc>18</tpc>
   <fret>0</fret>
-  <string>0</string>
+  <string>1</string>
 </Note>
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let note: Note = try xmlParser[Note.nodeKey].value()
+
+		if let spannerType = note.spanner?.spannerType, case Spanner.SpannerType.tie(let tie) = spannerType {
+			#expect(tie != nil)
+		} else {
+			#expect(Bool(false))
+		}
+
 		#expect(note.eid == 227633266709)
+		#expect(note.spanner?.next != nil)
+		#expect(note.pitch == 64)
+		#expect(note.tpc == 18)
+		#expect(note.fret == 0)
+		#expect(note.string == 1)
+	}
+
+	@Test func noteParseNoteDot() async throws {
+		let xmlString = #"""
+<Note>
+  <eid>485537462878228</eid>
+  <visible>0</visible>
+  <NoteDot>
+	<eid>485541757845589</eid>
+	<visible>0</visible>
+  </NoteDot>
+  <pitch>84</pitch>
+  <tpc>14</tpc>
+  <play>0</play>
+</Note>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let note: Note = try xmlParser[Note.nodeKey].value()
+
+		#expect(note.eid == 485537462878228)
+		#expect(note.visible == false)
+		#expect(note.noteDot != nil)
+		#expect(note.noteDot?.eid == 485541757845589)
+		#expect(note.noteDot?.visible == false)
+		#expect(note.pitch == 84)
+		#expect(note.tpc == 14)
+		#expect(note.played == false)
+		#expect(note.fret == nil)
+		#expect(note.string == nil)
 	}
 }

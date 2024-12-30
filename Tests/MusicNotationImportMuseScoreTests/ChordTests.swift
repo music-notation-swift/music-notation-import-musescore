@@ -27,7 +27,6 @@ import Testing
   </Note>
 </Chord>
 """#
-
 		let xmlParser = XMLHash.parse(xmlString)
 
 		let chord: Chord = try xmlParser[Chord.nodeKey].value()
