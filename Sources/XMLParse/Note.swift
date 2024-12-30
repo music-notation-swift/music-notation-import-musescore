@@ -41,20 +41,26 @@ public struct Note: XMLObjectDeserialization {
 	static let nodeKey = "Note"
 
 	var eid: Int
-	var linkedMain: Bool?
+	var linkedMain: Bool
+	var visible: Bool
+	var noteDot: NoteDot?
 	var spanner: Spanner?
 	var pitch: Int
 	var tpc: Int
-	var fret: Int
-	var string: Int
+	var played: Bool?
+	var fret: Int?
+	var string: Int?
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Note(
 			eid: try node["eid"].value(),
 			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
+			visible: try node["visible"].value(found: true, notFound: false),
+			noteDot: try node[NoteDot.nodeKey].value(),
 			spanner: try node[Spanner.nodeKey].value(),
 			pitch: try node["pitch"].value(),
 			tpc: try node["tpc"].value(),
+			played: try node["play"].value(),
 			fret: try node["fret"].value(),
 			string: try node["string"].value()
 		)
