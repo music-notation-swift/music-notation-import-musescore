@@ -32,6 +32,15 @@ public struct Chord: XMLObjectDeserialization {
 	var stem: Stem?
 	var note: Note
 
+	static func empty() -> Self {
+		Chord(
+			eid: 0,
+			linkedMain: false,
+			durationType: .measure,
+			note: Note(eid: 0, linkedMain: false, visible: false, pitch: 0, tpc: 0)
+		)
+	}
+
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Chord(
 			eid: try node["eid"].value(),

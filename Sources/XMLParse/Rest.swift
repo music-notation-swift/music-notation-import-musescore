@@ -30,6 +30,10 @@ public struct Rest: XMLObjectDeserialization {
 	var durationType: DurationType
 	var duration: String?
 
+	static func empty() -> Self {
+		Rest(eid: 0, durationType: .measure, duration: "")
+	}
+
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Rest(
 			eid: try node["eid"].value(),

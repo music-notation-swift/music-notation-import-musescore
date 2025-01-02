@@ -51,9 +51,9 @@ import SWXMLHash
 
 public struct Measure: XMLObjectDeserialization {
 	static let nodeKey = "Measure"
-	var voices: [Voice]
+	var voiceElements: [VoiceElement]
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		Measure(voices: try node[Voice.nodeKey].value())
+		Measure(voiceElements: try node["voice"].children.compactMap { try $0.value() as VoiceElement })
 	}
 }

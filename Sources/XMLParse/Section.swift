@@ -9,6 +9,8 @@
 import SWXMLHash
 
 public struct Section: XMLObjectDeserialization {
+	static let nodeKey = "section"
+
 	var id: String
 	var brackets: Bool
 	var barLineSpan: Bool

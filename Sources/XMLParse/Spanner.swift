@@ -236,10 +236,9 @@ extension Spanner {
 }
 
 // Case Equality. In this case it means the enums are equal, but the associated values are ignored
-infix operator =~
-extension Spanner.SpannerType {
-	public static func =~ (lhs: Spanner.SpannerType, rhs: Spanner.SpannerType) -> Bool {
-		switch (lhs, rhs) {
+extension Spanner.SpannerType: NearEquatable {
+	func isNearEqual(to: Spanner.SpannerType) -> Bool {
+		switch (self, to) {
 		case (.hairpin(_), .hairpin(_)):
 			return true
 		case (.ottava(_), .ottava(_)):

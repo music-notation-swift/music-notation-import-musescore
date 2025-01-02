@@ -29,7 +29,7 @@ import Testing
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let hairpinSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
-		#expect(hairpinSpanner.spannerType =~ Spanner.SpannerType.hairpin(Spanner.Hairpin.empty()))
+		#expect(hairpinSpanner.spannerType.isNearEqual(to: Spanner.SpannerType.hairpin(Spanner.Hairpin.empty())))
 		#expect(hairpinSpanner.next?.measures == 18)
 		#expect(hairpinSpanner.previous == nil)
 
@@ -58,7 +58,7 @@ import Testing
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let ottavaSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
-		#expect(ottavaSpanner.spannerType =~ Spanner.SpannerType.ottava(Spanner.Ottava.empty()))
+		#expect(ottavaSpanner.spannerType.isNearEqual(to: Spanner.SpannerType.ottava(Spanner.Ottava.empty())))
 		#expect(ottavaSpanner.next?.measures == 6)
 		#expect(ottavaSpanner.next?.fractions == "-5/16")
 		#expect(ottavaSpanner.previous == nil)

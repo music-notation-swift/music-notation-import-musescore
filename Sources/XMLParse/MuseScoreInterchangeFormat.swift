@@ -19,7 +19,7 @@ public struct MuseScoreInterchangeFormat: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		try MuseScoreInterchangeFormat(
 			version: Version.withString(node[Version.nodeKey].value()),
-			revision: Revision.withString(node[Revision.nodeKey].value()),
+			revision: node[Revision.nodeKey].value(),
 			lastEID: node["LastEID"].value(),
 			score: node[Score.nodeKey].value()
 		)

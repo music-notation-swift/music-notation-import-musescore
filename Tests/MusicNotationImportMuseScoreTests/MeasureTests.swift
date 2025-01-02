@@ -56,6 +56,6 @@ import Testing
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let measure: Measure = try xmlParser[Measure.nodeKey].value()
-		#expect(measure.voices.count == 1)
+		#expect(measure.voiceElements.count == 4)
 	}
 }

@@ -1,5 +1,5 @@
 //
-//	Voice.swift
+//	VoiceElement.swift
 //	music-notation-import-musescore
 //
 //	Created by Steven Woolgar on 2024-10-11.
@@ -8,6 +8,7 @@
 
 import SWXMLHash
 
+// These appears in the <voice> (see MeasureVoice) tag.
 public enum VoiceElement: XMLObjectDeserialization {
 	case rest(Rest)
 	case chord(Chord)
@@ -20,13 +21,31 @@ public enum VoiceElement: XMLObjectDeserialization {
 		case Rest.nodeKey:
 			return .rest(try node.value())
 		case Chord.nodeKey:
-			return .keySignature(try node.value())
+			return .chord(try node.value())
 		case KeySignature.nodeKey:
 			return .keySignature(try node.value())
 		case TimeSignature.nodeKey:
-			return .keySignature(try node.value())
+			return .timeSignature(try node.value())
 		default:
 			throw VoiceElementError.unknownVoiceElementError
+		}
+	}
+}
+
+// Case Equality. In this case it means the enums are equal, but the associated values are ignored
+extension VoiceElement: NearEquatable {
+	public func isNearEqual(to: VoiceElement) -> Bool {
+		switch (self, to) {
+		case (.rest(_), .rest(_)):
+			return true
+		case (.chord(_), .chord(_)):
+			return true
+		case (.keySignature(_), .keySignature(_)):
+			return true
+		case (.timeSignature(_), .timeSignature(_)):
+			return true
+		default:
+			return false
 		}
 	}
 }
