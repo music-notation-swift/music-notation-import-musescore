@@ -13,15 +13,14 @@ import Testing
 @Suite final class TieTests {
 	@Test func channelParseOpen() async throws {
 		let xmlString = #"""
-<Tie name="open">
-  <program value="27" />
-  <synti>Fluid</synti>
+<Tie>
+  <eid>231928234015</eid>
+  <linkedMain />
 </Tie>
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let tie: Tie = try xmlParser[Tie.nodeKey].value()
-//		#expect(tie.name == "open")
-//		#expect(tie.program == 27)
-//		#expect(tie.synthesizer == "Fluid")
+		#expect(tie.eid == 231928234015)
+		#expect(tie.linkedMain == true)
 	}
 }

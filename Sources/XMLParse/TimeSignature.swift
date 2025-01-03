@@ -11,8 +11,14 @@ import SWXMLHash
 public struct TimeSignature: XMLObjectDeserialization {
 	static let nodeKey = "TimeSig"
 	var eid: Int
+	var numerator: Int
+	var denominator: Int
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		TimeSignature(eid: try node["eid"].value())
+		TimeSignature(
+			eid: try node["eid"].value(),
+			numerator: try node["sigN"].value(),
+			denominator: try node["sigD"].value()
+		)
 	}
 }

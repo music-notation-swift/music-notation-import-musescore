@@ -16,6 +16,7 @@ public struct Section: XMLObjectDeserialization {
 	var barLineSpan: Bool
 	var thinBrackets: Bool
 	var families: [Family]
+	var unsortedFamily: String
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		return try Section(
@@ -23,7 +24,8 @@ public struct Section: XMLObjectDeserialization {
 			brackets: try node.value(ofAttribute: "brackets"),
 			barLineSpan: try node.value(ofAttribute: "barLineSpan"),
 			thinBrackets: try node.value(ofAttribute: "thinBrackets"),
-			families: node[Family.nodeKey].value()
+			families: node[Family.nodeKey].value(),
+			unsortedFamily: node["unsorted"].value(ofAttribute: "group")
 		)
 	}
 }

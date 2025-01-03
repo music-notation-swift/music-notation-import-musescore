@@ -18,7 +18,6 @@ import SWXMLHash
 //  <string>64</string>
 //</StringData>
 
-// !INCOMPLETE!
 public struct StringData: XMLObjectDeserialization {
 	static let nodeKey = "StringData"
 
@@ -28,7 +27,7 @@ public struct StringData: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		StringData(
 			frets: try node["frets"].value(),
-			strings: try node["strings"].value()
+			strings: try node["string"].value()
 		)
 	}
 }

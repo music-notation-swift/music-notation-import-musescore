@@ -10,6 +10,8 @@ import SWXMLHash
 
 // These appears in the <voice> (see MeasureVoice) tag.
 public enum VoiceElement: XMLObjectDeserialization {
+	static let nodeKey = "voice"
+
 	case rest(Rest)
 	case chord(Chord)
 	case timeSignature(TimeSignature)

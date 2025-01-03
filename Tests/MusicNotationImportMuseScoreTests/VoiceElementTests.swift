@@ -83,7 +83,7 @@ import Testing
 </voice>
 """#
 		let xmlParser = XMLHash.parse(xmlString)
-		let voiceElements = try xmlParser["voice"].children.compactMap { try $0.value() as VoiceElement }
+		let voiceElements = try xmlParser[VoiceElement.nodeKey].children.compactMap { try $0.value() as VoiceElement }
 		#expect(voiceElements.isEmpty == false)
 		#expect(voiceElements.count == 6)
 		#expect(voiceElements[3].isNearEqual(to: VoiceElement.chord(Chord.empty())))

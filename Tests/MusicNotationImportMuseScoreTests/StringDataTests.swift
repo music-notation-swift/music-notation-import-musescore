@@ -13,15 +13,25 @@ import Testing
 @Suite final class StringDataTests {
 	@Test func channelParseOpen() async throws {
 		let xmlString = #"""
-<StringData name="open">
-  <program value="27" />
-  <synti>Fluid</synti>
+<StringData>
+  <frets>24</frets>
+  <string>40</string>
+  <string>45</string>
+  <string>50</string>
+  <string>55</string>
+  <string>59</string>
+  <string>64</string>
 </StringData>
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let stringData: StringData = try xmlParser[StringData.nodeKey].value()
-//		#expect(stringData.name == "open")
-//		#expect(stringData.program == 27)
-//		#expect(stringData.synthesizer == "Fluid")
+		#expect(stringData.frets == 24)
+		#expect(stringData.strings.count == 6)
+		#expect(stringData.strings[0] == 40)
+		#expect(stringData.strings[1] == 45)
+		#expect(stringData.strings[2] == 50)
+		#expect(stringData.strings[3] == 55)
+		#expect(stringData.strings[4] == 59)
+		#expect(stringData.strings[5] == 64)
 	}
 }

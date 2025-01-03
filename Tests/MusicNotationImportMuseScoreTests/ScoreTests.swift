@@ -7,22 +7,36 @@
 //
 
 @testable import MusicNotationImportMuseScore
+import Foundation
 import SWXMLHash
+import System
 import Testing
 
 @Suite final class ScoreTests {
 	@Test func scoreParse() async throws {
-		let xmlString = #"""
-<Channel>
-  <controller ctrl="0" value="1" />
-  <controller ctrl="32" value="17" />
-  <program value="72" />
-  <synti>Fluid</synti>
-  <midiPort>2</midiPort>
-  <midiChannel>3</midiChannel>
-</Channel>
-"""#
+		let filenamePath = FilePath("ScoreTest.xml")
+		guard let filePath = Bundle.module.path(
+			forResource: filenamePath.stem,
+			ofType: filenamePath.extension,
+			inDirectory: "TestFiles"
+		) else {
+			Issue.record("Bundle path not found")
+			return
+		}
+
+		let xmlString = try String(contentsOf: URL(fileURLWithPath: filePath))
+
 		let xmlParser = XMLHash.parse(xmlString)
 		let score: Score = try xmlParser[Score.nodeKey].value()
+		#expect(score.division == 480)
+		#expect(score.showInvisible == true)
+		#expect(score.showUnprintable == true)
+		#expect(score.showFrames == true)
+		#expect(score.showMargins == false)
+		#expect(score.open == 1)
+		#expect(score.metaTags.count == 13)
+		#expect(score.order.id == "orchestral")
+		#expect(score.part.id == 1)
+		#expect(score.staves.count == 2)
 	}
 }

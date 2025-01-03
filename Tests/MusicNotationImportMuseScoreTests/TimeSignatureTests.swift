@@ -13,15 +13,16 @@ import Testing
 @Suite final class TimeSignatureTests {
 	@Test func timeSignatureParseOpen() async throws {
 		let xmlString = #"""
-<TimeSignature name="open">
-  <program value="27" />
-  <synti>Fluid</synti>
-</TimeSignature>
+<TimeSig>
+  <eid>171798691865</eid>
+  <sigN>12</sigN>
+  <sigD>8</sigD>
+</TimeSig>
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let timeSignature: TimeSignature = try xmlParser[TimeSignature.nodeKey].value()
-//		#expect(timeSignature.name == "open")
-//		#expect(timeSignature.program == 27)
-//		#expect(timeSignature.synthesizer == "Fluid")
+		#expect(timeSignature.eid == 171798691865)
+		#expect(timeSignature.numerator == 12)
+		#expect(timeSignature.denominator == 8)
 	}
 }
