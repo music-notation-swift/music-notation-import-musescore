@@ -10,10 +10,13 @@ import SWXMLHash
 
 public struct Revision: XMLObjectDeserialization {
 	static let nodeKey = "programRevision"
-	var value: Int
+	var value: UInt64
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
-		return Revision(value: try node.value())
+		guard let revisionValue = UInt64(try node.value() as String, radix: 16) else {
+			throw RevisionError.revisionStringConversion
+		}
+		return Revision(value: revisionValue)
 	}
 }
 

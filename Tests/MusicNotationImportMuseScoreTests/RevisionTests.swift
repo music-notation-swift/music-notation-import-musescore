@@ -15,6 +15,6 @@ import Testing
 		let xmlParser = XMLHash.parse("<programRevision>2232670</programRevision>")
 
 		let revision: Revision = try xmlParser[Revision.nodeKey].value()
-		#expect(revision.value == 2232670)
+		#expect(revision.value == 35858032)
 	}
 }

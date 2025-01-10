@@ -66,6 +66,14 @@ import ZIPFoundation
 		}
 	}
 
+	@Test func parseXML() async throws {
+		let importer = try importer(from: "Test1.mscx")
+		let xmlString = try importer.createStringFromFile()
+		let interchangeFormat = try importer.parseXML(xmlString)
+		print("\(interchangeFormat)")
+		#expect(interchangeFormat.score.staves.count > 0)
+	}
+
 	func filePathURL(from filename: String) throws -> URL {
 		let filenamePath = FilePath(filename)
 		guard let filePath = Bundle.module.path(
