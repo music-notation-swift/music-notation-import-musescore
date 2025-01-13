@@ -64,7 +64,7 @@ import Testing
 		#expect(ottavaSpanner.previous == nil)
 
 		if case Spanner.SpannerType.ottava(let ottava) = ottavaSpanner.spannerType {
-			#expect(ottava.subtype == "8va")
+			#expect(ottava?.subtype == "8va")
 		} else {
 			#expect(Bool(false))
 		}

@@ -109,10 +109,10 @@ public struct Part: XMLObjectDeserialization {
 		var longName: String
 		var shortName: String
 		var trackName: String
-		var minPitchP: Int
-		var maxPitchP: Int
-		var minPitchA: Int
-		var maxPitchA: Int
+		var minPitchP: Int?
+		var maxPitchP: Int?
+		var minPitchA: Int?
+		var maxPitchA: Int?
 		var instrumentID: String
 		var clef: [String]?			// One clef per staff: guitar has treble, bass, tab (I think)
 		var singleNoteDynamics: Int?
@@ -176,11 +176,11 @@ extension Part.Instrument {
 		let longName = try node["longName"].value() as String
 		let shortName = try node["shortName"].value() as String
 		let trackName = try node["trackName"].value() as String
-		let minPitchP = try node["minPitchP"].value() as Int
-		let maxPitchP = try node["maxPitchP"].value() as Int
-		let minPitchA = try node["minPitchA"].value() as Int
-		let maxPitchA = try node["maxPitchA"].value() as Int
-		let instrumentID = try node["maxPitchA"].value() as String
+		let minPitchP = try node["minPitchP"].value() as Int?
+		let maxPitchP = try node["maxPitchP"].value() as Int?
+		let minPitchA = try node["minPitchA"].value() as Int?
+		let maxPitchA = try node["maxPitchA"].value() as Int?
+		let instrumentID = try node["instrumentId"].value() as String
 		let clef = try node["clef"].value() as [String]?
 		let singleNoteDynamics = try node["singleNoteDynamics"].value() as Int?
 		let stringData = try node["stringData"].value() as StringData?

@@ -66,7 +66,9 @@ public struct MuseScoreImporter {
 		return try xml["museScore"].value()
 	}
 
-	public func createNotation(with interchangeFormat: MusicNotationImportMuseScore.MuseScoreInterchangeFormat) throws -> MusicNotation.Score {
+	public func createNotation(
+		with interchangeFormat: MusicNotationImportMuseScore.MuseScoreInterchangeFormat
+	) throws -> MusicNotation.Score {
 		return MusicNotation.Score()
 	}
 }

@@ -14,14 +14,18 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 	enum SpannerType: Sendable {
 		static let nodeKey = "type"
 
+		case glissando(Glissando?)
 		case hairpin(Hairpin)
-		case ottava(Ottava)
+		case ottava(Ottava?)
+		case palmMute(PalmMute?)
 		case pedal(Pedal)
 		case slur(Slur)
 		case textline(TextLine)
 		case tie(Tie?)
 		case trill(Trill)
+		case vibrato(Vibrato?)
 		case volta(Volta)
+		case whammyBar(WhammyBar)
 	}
 
 	var spannerType: SpannerType
@@ -31,10 +35,14 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		let propertyAttribute: String = try node.value(ofAttribute: SpannerType.nodeKey)
 		let spannerType: SpannerType = switch propertyAttribute {
+		case Glissando.nodeKey:
+			.glissando(try node[Glissando.nodeKey].value())
 		case Hairpin.nodeKey:
 			.hairpin(try node[Hairpin.nodeKey].value())
 		case Ottava.nodeKey:
 			.ottava(try node[Ottava.nodeKey].value())
+		case PalmMute.nodeKey:
+			.palmMute(try node[PalmMute.nodeKey].value())
 		case Pedal.nodeKey:
 			.pedal(try node[Pedal.nodeKey].value())
 		case Slur.nodeKey:
@@ -45,8 +53,12 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 			.tie(try node[Tie.nodeKey].value())
 		case Trill.nodeKey:
 			.trill(try node[Trill.nodeKey].value())
+		case Vibrato.nodeKey:
+			.vibrato(try node[Vibrato.nodeKey].value())
 		case Volta.nodeKey:
 			.volta(try node[Volta.nodeKey].value())
+		case WhammyBar.nodeKey:
+			.whammyBar(try node[WhammyBar.nodeKey].value())
 		default:
 			throw SpannerParseError.unsupportedPropertyAttribute(propertyAttribute)
 		}
@@ -61,6 +73,22 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 
 // MARK: - Spanner Types
 extension Spanner {
+	public struct Glissando: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Glissando"
+
+		var eid: Int
+		var diagonal: Bool
+		var anchor: Int
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Glissando(
+				eid: try node["eid"].value(),
+				diagonal: try node["diagonal"].value(),
+				anchor: try node["anchor"].value()
+			)
+		}
+	}
+
 	//<Spanner type="HairPin">
 	//  <HairPin>
 	//    <subtype>2</subtype>
@@ -124,6 +152,26 @@ extension Spanner {
 
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
 			Ottava(subtype: try node["subtype"].value())
+		}
+	}
+
+	//<Spanner type="PalmMute">
+	//  <PalmMute>
+	//    <eid>5527622910053</eid>
+	//  </PalmMute>
+	//  <next>
+	//    <location>
+	//      <measures>1</measures>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct PalmMute: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "PalmMute"
+
+		var eid: Int
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			PalmMute(eid: try node["eid"].value())
 		}
 	}
 
@@ -206,6 +254,32 @@ extension Spanner {
 		}
 	}
 
+	//<Spanner type="Vibrato">
+	//  <Vibrato>
+	//    <subtype>guitarVibratoWide</subtype>
+	//    <eid>730144440420</eid>
+	//  </Vibrato>
+	//  <next>
+	//   <location>
+	//     <fractions>3/4</fractions>
+	//	 </location>
+	//  </next>
+	//</Spanner>
+
+	public struct Vibrato: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "Vibrato"
+
+		var eid: Int
+		var subtype: String
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			Vibrato(
+				eid: try node["eid"].value(),
+				subtype: try node["subtype"].value()
+			)
+		}
+	}
+
 	//<Spanner type="Volta">
 	//  <Volta>
 	//    <endHookType>1</endHookType>
@@ -233,15 +307,44 @@ extension Spanner {
 			)
 		}
 	}
+
+	//<Spanner type="WhammyBar">
+	//  <WhammyBar>
+	//    <beginTextOffset x="0" y="0"/>
+	//    <eid>17892833755238</eid>
+	//  </WhammyBar>
+	//  <next>
+	//    <location>
+	//      <fractions>1/4</fractions>
+	//    </location>
+	//  </next>
+	//</Spanner>
+	public struct WhammyBar: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "WhammyBar"
+
+		var eid: Int
+		var beginTextOffset: (x: Int, y: Int)
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			WhammyBar(
+				eid: try node["eid"].value(),
+				beginTextOffset: (try node["beginTextOffset"].value(ofAttribute: "x"), try node["beginTextOffset"].value(ofAttribute: "y"))
+			)
+		}
+	}
 }
 
 // Case Equality. In this case it means the enums are equal, but the associated values are ignored
 extension Spanner.SpannerType: NearEquatable {
 	func isNearEqual(to: Spanner.SpannerType) -> Bool {
 		switch (self, to) {
+		case (.glissando(_), .glissando(_)):
+			return true
 		case (.hairpin(_), .hairpin(_)):
 			return true
 		case (.ottava(_), .ottava(_)):
+			return true
+		case (.palmMute(_), .palmMute(_)):
 			return true
 		case (.pedal(_), .pedal(_)):
 			return true
@@ -253,7 +356,11 @@ extension Spanner.SpannerType: NearEquatable {
 			return true
 		case (.trill(_), .trill(_)):
 			return true
+		case (.vibrato(_), .vibrato(_)):
+			return true
 		case (.volta(_), .volta(_)):
+			return true
+		case (.whammyBar(_), .whammyBar(_)):
 			return true
 		default:
 			return false

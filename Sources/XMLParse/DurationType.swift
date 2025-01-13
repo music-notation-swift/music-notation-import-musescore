@@ -12,6 +12,8 @@ import SWXMLHash
 
 public enum DurationType: XMLObjectDeserialization {
 	static let nodeKey = "durationType"
+	case thirtysecond
+	case sixteenth
 	case eighth
 	case quarter
 	case half
@@ -20,6 +22,10 @@ public enum DurationType: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		let propertyAttribute: String = try node.value()
 		switch propertyAttribute {
+		case "32nd":
+			return .thirtysecond
+		case "16th":
+			return .sixteenth
 		case "eighth":
 			return .eighth
 		case "quarter":

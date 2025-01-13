@@ -100,8 +100,8 @@ import Testing
 		let note1 = Note(eid: 1, linkedMain: true, visible: true, noteDot: nil, spanner: nil, pitch: 1, tpc: 1, played: nil, fret: nil, string: nil)
 		let note2 = Note(eid: 2, linkedMain: true, visible: true, noteDot: nil, spanner: nil, pitch: 1, tpc: 1, played: nil, fret: nil, string: nil)
 
-		let chord1 = VoiceElement.chord(Chord(eid: 1, linkedMain: false, dots: 1, durationType: .quarter, stem: Stem(eid: 1, visible: true), note: note1))
-		let chord2 = VoiceElement.chord(Chord(eid: 2, linkedMain: true, dots: 2, durationType: .measure, stem: Stem(eid: 2, visible: false), note: note2))
+		let chord1 = VoiceElement.chord(Chord(eid: 1, linkedMain: false, dots: 1, durationType: .quarter, stem: Stem(eid: 1, visible: true), notes: [note1]))
+		let chord2 = VoiceElement.chord(Chord(eid: 2, linkedMain: true, dots: 2, durationType: .measure, stem: Stem(eid: 2, visible: false), notes: [note2]))
 
 		#expect(chord1.isNearEqual(to: chord2))
 	}

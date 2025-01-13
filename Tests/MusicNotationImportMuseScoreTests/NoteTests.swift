@@ -46,15 +46,15 @@ import Testing
   <eid>227633266709</eid>
   <linkedMain />
   <Spanner type="Tie">
-    <Tie>
-	   <eid>231928234015</eid>
-	   <linkedMain />
-    </Tie>
-    <next>
-	   <location>
-	     <fractions>1/4</fractions>
-	   </location>
-    </next>
+ <Tie>
+ <eid>231928234015</eid>
+ <linkedMain />
+ </Tie>
+ <next>
+ <location>
+   <fractions>1/4</fractions>
+ </location>
+ </next>
   </Spanner>
   <pitch>64</pitch>
   <tpc>18</tpc>
@@ -85,8 +85,8 @@ import Testing
   <eid>485537462878228</eid>
   <visible>0</visible>
   <NoteDot>
-	<eid>485541757845589</eid>
-	<visible>0</visible>
+ <eid>485541757845589</eid>
+ <visible>0</visible>
   </NoteDot>
   <pitch>84</pitch>
   <tpc>14</tpc>
@@ -107,4 +107,36 @@ import Testing
 		#expect(note.fret == nil)
 		#expect(note.string == nil)
 	}
+
+	@Test func noteParseAccidental() async throws {
+		let xmlString = #"""
+<Note>
+  <eid>6734508720148</eid>
+  <Accidental>
+	<subtype>accidentalNatural</subtype>
+	<eid>183914794582032</eid>
+  </Accidental>
+  <pitch>41</pitch>
+  <tpc>13</tpc>
+  <fret>2</fret>
+  <string>5</string>
+</Note>
+"""#
+		let xmlParser = XMLHash.parse(xmlString)
+		let note: Note = try xmlParser[Note.nodeKey].value()
+		print("\(note)")
+
+		#expect(note.eid == 6734508720148)
+		#expect(note.accidental?.subtype == "accidentalNatural")
+		#expect(note.accidental?.eid == 183914794582032)
+		#expect(note.visible == false)
+		#expect(note.noteDot == nil)
+		#expect(note.spanner == nil)
+		#expect(note.pitch == 41)
+		#expect(note.tpc == 13)
+		#expect(note.played == nil)
+		#expect(note.fret == 2)
+		#expect(note.string == 5)
+	}
+
 }

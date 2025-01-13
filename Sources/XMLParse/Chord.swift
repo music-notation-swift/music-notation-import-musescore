@@ -30,14 +30,14 @@ public struct Chord: XMLObjectDeserialization {
 	var dots: Int?
 	var durationType: DurationType
 	var stem: Stem?
-	var note: Note
+	var notes: [Note]
 
 	static func empty() -> Self {
 		Chord(
 			eid: 0,
 			linkedMain: false,
 			durationType: .measure,
-			note: Note(eid: 0, linkedMain: false, visible: false, pitch: 0, tpc: 0)
+			notes: [Note(eid: 0, linkedMain: false, visible: false, pitch: 0, tpc: 0)]
 		)
 	}
 
@@ -48,7 +48,7 @@ public struct Chord: XMLObjectDeserialization {
 			dots: try node["dots"].value(),
 			durationType: try node[DurationType.nodeKey].value(),
 			stem: try node[Stem.nodeKey].value(),
-			note: try node[Note.nodeKey].value()
+			notes: try node[Note.nodeKey].value()
 		)
 	}
 }

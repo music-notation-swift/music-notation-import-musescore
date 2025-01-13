@@ -29,13 +29,6 @@ public struct Location: XMLObjectDeserialization, Sendable {
 			fractions: try node["fractions"].value()
 		)
 	}
-
-	// Should have one of more of the location values
-	public func validate() throws {
-		if measures == nil && fractions == nil {
-			throw LocationParsingError.locationValidationFailure
-		}
-	}
 }
 
 public enum LocationParsingError: Error {

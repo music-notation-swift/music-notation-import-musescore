@@ -41,6 +41,7 @@ public struct Note: XMLObjectDeserialization {
 	static let nodeKey = "Note"
 
 	var eid: Int
+	var accidental: Accidental?
 	var linkedMain: Bool
 	var visible: Bool
 	var noteDot: NoteDot?
@@ -54,6 +55,7 @@ public struct Note: XMLObjectDeserialization {
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
 		Note(
 			eid: try node["eid"].value(),
+			accidental: try node["Accidental"].value(),
 			linkedMain: try node["linkedMain"].value(found: true, notFound: false),
 			visible: try node["visible"].value(found: true, notFound: false),
 			noteDot: try node[NoteDot.nodeKey].value(),

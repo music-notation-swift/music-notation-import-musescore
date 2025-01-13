@@ -35,14 +35,14 @@ import Testing
 		#expect(chord.dots == nil)
 		#expect(chord.durationType == .quarter)
 
-		#expect(chord.note.eid == 180388626453)
-		#expect(chord.note.linkedMain == true)
-		#expect(chord.note.visible == false)
-		#expect(chord.note.noteDot == nil)
-		#expect(chord.note.pitch == 40)
-		#expect(chord.note.tpc == 18)
-		#expect(chord.note.fret == 0)
-		#expect(chord.note.string == 5)
+		#expect(chord.notes[0].eid == 180388626453)
+		#expect(chord.notes[0].linkedMain == true)
+		#expect(chord.notes[0].visible == false)
+		#expect(chord.notes[0].noteDot == nil)
+		#expect(chord.notes[0].pitch == 40)
+		#expect(chord.notes[0].tpc == 18)
+		#expect(chord.notes[0].fret == 0)
+		#expect(chord.notes[0].string == 5)
 	}
 
 	@Test func parseComplexChord() async throws {
@@ -79,13 +79,13 @@ import Testing
 		#expect(chord.stem?.eid == 485533167910930)
 		#expect(chord.stem?.visible == false)
 
-		#expect(chord.note.eid == 485537462878228)
-		#expect(chord.note.linkedMain == false)
-		#expect(chord.note.visible == false)
-		#expect(chord.note.noteDot?.eid == 485541757845589)
-		#expect(chord.note.noteDot?.visible == false)
-		#expect(chord.note.pitch == 84)
-		#expect(chord.note.tpc == 14)
-		#expect(chord.note.played == false)
+		#expect(chord.notes[0].eid == 485537462878228)
+		#expect(chord.notes[0].linkedMain == false)
+		#expect(chord.notes[0].visible == false)
+		#expect(chord.notes[0].noteDot?.eid == 485541757845589)
+		#expect(chord.notes[0].noteDot?.visible == false)
+		#expect(chord.notes[0].pitch == 84)
+		#expect(chord.notes[0].tpc == 14)
+		#expect(chord.notes[0].played == false)
 	}
 }

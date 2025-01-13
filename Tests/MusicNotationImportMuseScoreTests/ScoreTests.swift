@@ -36,7 +36,11 @@ import Testing
 		#expect(score.open == 1)
 		#expect(score.metaTags.count == 13)
 		#expect(score.order.id == "orchestral")
-		#expect(score.part.id == 1)
+		#expect(score.parts.count == 2)
+		#expect(score.parts[0].id == 1)
+		#expect(score.parts[1].id == 2)
 		#expect(score.staves.count == 2)
+		#expect(score.staves[0].id == 1)
+		#expect(score.staves[1].id == 2)
 	}
 }
