@@ -15,17 +15,18 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "type"
 
 		case glissando(Glissando?)
-		case hairpin(Hairpin)
+		case hairpin(Hairpin?)
+		case harmonicMark(HarmonicMark?)
 		case ottava(Ottava?)
 		case palmMute(PalmMute?)
 		case pedal(Pedal)
 		case slur(Slur)
 		case textline(TextLine)
 		case tie(Tie?)
-		case trill(Trill)
+		case trill(Trill?)
 		case vibrato(Vibrato?)
 		case volta(Volta)
-		case whammyBar(WhammyBar)
+		case whammyBar(WhammyBar?)
 	}
 
 	var spannerType: SpannerType
@@ -39,6 +40,8 @@ public struct Spanner: XMLObjectDeserialization, Sendable {
 			.glissando(try node[Glissando.nodeKey].value())
 		case Hairpin.nodeKey:
 			.hairpin(try node[Hairpin.nodeKey].value())
+		case HarmonicMark.nodeKey:
+			.harmonicMark(try node[HarmonicMark.nodeKey].value())
 		case Ottava.nodeKey:
 			.ottava(try node[Ottava.nodeKey].value())
 		case PalmMute.nodeKey:
@@ -117,18 +120,50 @@ extension Spanner {
 			case invalid
 		}
 
+		var eid: Int?
 		var subtype: Int
-		var endText: String
-		var continueText: String
+		var endText: String?
+		var continueText: String?
+		var lineVisible: Bool
 
 		static func empty() -> Self {
-			Hairpin(subtype: 0, endText: "", continueText: "")
+			Hairpin(subtype: 0, endText: "", continueText: "", lineVisible: false)
 		}
 
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
 			Hairpin(
+				eid: try node["eid"].value(),
 				subtype: try node["subtype"].value(),
 				endText: try node["endText"].value(),
+				continueText: try node["continueText"].value(),
+				lineVisible: try node["lineVisible"].value(found: true, notFound: false)
+			)
+		}
+	}
+
+	//<HarmonicMark>
+	//  <beginText>AH</beginText>
+	//  <beginTextOffset x="0" y="0"/>
+	//  <continueText>AH</continueText>
+	//  <eid>72009421684840</eid>
+	//</HarmonicMark>
+	public struct HarmonicMark: XMLObjectDeserialization, Sendable {
+		static let nodeKey = "HarmonicMark"
+
+		var eid: Int
+		var beginText: String
+		var beginTextOffset: (x: Int, y: Int)
+		var continueText: String
+
+		static func empty() -> Self {
+			HarmonicMark(eid: 0, beginText: "", beginTextOffset: (0, 0), continueText: "")
+		}
+
+		public static func deserialize(_ node: XMLIndexer) throws -> Self {
+			HarmonicMark(
+				eid: try node["eid"].value(),
+				beginText: try node["beginText"].value(),
+				beginTextOffset: (try node["beginTextOffset"].value(ofAttribute: "x"), try node["beginTextOffset"].value(ofAttribute: "y")),
 				continueText: try node["continueText"].value()
 			)
 		}
@@ -247,13 +282,17 @@ extension Spanner {
 	public struct Trill: XMLObjectDeserialization, Sendable {
 		static let nodeKey = "Trill"
 
+		var eid: Int?
 		var subtype: String
-		var lineWidth: Double
+		var lineWidth: Double?
+		var ornament: Ornament?
 
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
 			Trill(
+				eid: try node["eid"].value(),
 				subtype: try node["subtype"].value(),
-				lineWidth: try node["lineWidth"].value()
+				lineWidth: try node["lineWidth"].value(),
+				ornament: try node[Ornament.nodeKey].value()
 			)
 		}
 	}

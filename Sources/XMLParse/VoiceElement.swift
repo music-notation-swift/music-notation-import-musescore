@@ -16,8 +16,10 @@ public enum VoiceElement: XMLObjectDeserialization {
 	case chord(Chord?)
 	case dynamic(Dynamic)
 	case endTuplet(Bool?)
+	case fermata(Fermata)
 	case keySignature(KeySignature)
 	case location(Location)
+	case measureRepeat(MeasureRepeat)
 	case rehearsalMark(Int, String)
 	case rest(Rest)
 	case spanner(Spanner)
@@ -37,10 +39,14 @@ public enum VoiceElement: XMLObjectDeserialization {
 			return .dynamic(try node.value())
 		case "endTuplet":
 			return .endTuplet(try node.value(found: true, notFound: false))
+		case Fermata.nodeKey:
+			return .fermata(try node.value())
 		case KeySignature.nodeKey:
 			return .keySignature(try node.value())
 		case Location.nodeKey:
 			return .location(try node.value())
+		case MeasureRepeat.nodeKey:
+			return .measureRepeat(try node.value())
 		case "RehearsalMark":
 			return .rehearsalMark(try node["eid"].value(), try node["text"].value())
 		case Rest.nodeKey:
@@ -65,13 +71,33 @@ public enum VoiceElement: XMLObjectDeserialization {
 extension VoiceElement: NearEquatable {
 	public func isNearEqual(to: VoiceElement) -> Bool {
 		switch (self, to) {
-		case (.rest(_), .rest(_)):
+		case (.barLine(_), .barLine(_)):
 			return true
 		case (.chord(_), .chord(_)):
 			return true
+		case (.dynamic(_), .dynamic(_)):
+			return true
+		case (.endTuplet(_), .endTuplet(_)):
+			return true
 		case (.keySignature(_), .keySignature(_)):
 			return true
+		case (.location(_), .location(_)):
+			return true
+		case (.measureRepeat(_), .measureRepeat(_)):
+			return true
+		case (.rehearsalMark(_, _), .rehearsalMark(_, _)):
+			return true
+		case (.rest(_), .rest(_)):
+			return true
+		case (.spanner(_), .spanner(_)):
+			return true
+		case (.staffText(_), .staffText(_)):
+			return true
+		case (.tempo(_), .tempo(_)):
+			return true
 		case (.timeSignature(_), .timeSignature(_)):
+			return true
+		case (.tuplet(_), .tuplet(_)):
 			return true
 		default:
 			return false

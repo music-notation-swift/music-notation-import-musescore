@@ -62,7 +62,8 @@ import Testing
 		#expect(hairpinSpanner.next?.measures == 18)
 		#expect(hairpinSpanner.previous == nil)
 
-		if case Spanner.SpannerType.hairpin(let hairpin) = hairpinSpanner.spannerType {
+		if case Spanner.SpannerType.hairpin(let hairpin) = hairpinSpanner.spannerType,
+			let hairpin {
 			#expect(hairpin.subtype == 2)
 			#expect(hairpin.endText == "et")
 			#expect(hairpin.continueText == "ct")
@@ -163,8 +164,8 @@ import Testing
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let trillSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
-		if case Spanner.SpannerType.trill(let trill) = trillSpanner.spannerType {
-			#expect(trill != nil)
+		if case Spanner.SpannerType.trill(let trill) = trillSpanner.spannerType,
+		   let trill {
 			#expect(trill.subtype == "trill")
 			#expect(trill.lineWidth == 0.24765)
 		} else {
@@ -221,7 +222,8 @@ import Testing
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let whammyBarSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
-		if case Spanner.SpannerType.whammyBar(let whammy) = whammyBarSpanner.spannerType {
+		if case Spanner.SpannerType.whammyBar(let whammy) = whammyBarSpanner.spannerType,
+		   let whammy {
 			#expect(whammy != nil)
 			#expect(whammy.eid == 17892833755238)
 			#expect(whammy.beginTextOffset == (1, 2))

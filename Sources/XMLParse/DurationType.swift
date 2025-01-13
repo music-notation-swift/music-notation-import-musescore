@@ -17,6 +17,7 @@ public enum DurationType: XMLObjectDeserialization {
 	case eighth
 	case quarter
 	case half
+	case whole
 	case measure
 
 	public static func deserialize(_ node: XMLIndexer) throws -> Self {
@@ -32,6 +33,8 @@ public enum DurationType: XMLObjectDeserialization {
 			return .quarter
 		case "half":
 			return .half
+		case "whole":
+			return .whole
 		case "measure":
 			return .measure
 		default:
