@@ -43,4 +43,34 @@ import Testing
 		#expect(score.staves[0].id == 1)
 		#expect(score.staves[1].id == 2)
 	}
+
+	@Test func scoreParseMetaTagAccess() async throws {
+		let filenamePath = FilePath("ScoreMetaTagTest.xml")
+		guard let filePath = Bundle.module.path(
+			forResource: filenamePath.stem,
+			ofType: filenamePath.extension,
+			inDirectory: "TestFiles"
+		) else {
+			Issue.record("Bundle path not found")
+			return
+		}
+
+		let xmlString = try String(contentsOf: URL(fileURLWithPath: filePath))
+		let xmlParser = XMLHash.parse(xmlString)
+		let score: Score = try xmlParser[Score.nodeKey].value()
+		#expect(score.title() == "Untitled score")
+		#expect(score.subtitle() == "Subtitle")
+		#expect(score.arranger() == "arranger")
+		#expect(score.composer() == "Composer / arranger")
+		#expect(score.copyright() == "copyright")
+		#expect(score.creationDate() == "2025-01-13")
+		#expect(score.lyricist() == "lyricist")
+		#expect(score.movementNumber() == "movementNumber")
+		#expect(score.movementTitle() == "movementTitle")
+		#expect(score.platform() == "Apple Macintosh")
+		#expect(score.source() == "source")
+		#expect(score.translator() == "translator")
+		#expect(score.workNumber() == "workNumber")
+		#expect(score.workTitle() == "Untitled score")
+	}
 }
