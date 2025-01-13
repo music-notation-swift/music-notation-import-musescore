@@ -80,6 +80,10 @@ extension Spanner {
 		var diagonal: Bool
 		var anchor: Int
 
+		static func empty() -> Self {
+			Glissando(eid: 0, diagonal: false, anchor: 0)
+		}
+
 		public static func deserialize(_ node: XMLIndexer) throws -> Self {
 			Glissando(
 				eid: try node["eid"].value(),
