@@ -69,7 +69,7 @@ public struct MuseScoreImporter {
 	public func createNotation(
 		with interchangeFormat: MusicNotationImportMuseScore.MuseScoreInterchangeFormat
 	) throws -> MusicNotation.Score {
-		return MusicNotation.Score()
+		try MusicNotation.Score(with: interchangeFormat)
 	}
 }
 

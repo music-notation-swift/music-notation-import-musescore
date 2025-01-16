@@ -10,8 +10,8 @@ import Foundation
 import MusicNotation
 
 extension MusicNotation.Score {
-	init(with interchangeFormat: MuseScoreInterchangeFormat) {
-		let parts = MusicNotation.Part.generateParts(with: interchangeFormat)
+	init(with interchangeFormat: MuseScoreInterchangeFormat) throws {
+		let parts = try MusicNotation.Part.generate(with: interchangeFormat)
 		self.init(
 			parts: parts,
 			title: interchangeFormat.score.title(),
