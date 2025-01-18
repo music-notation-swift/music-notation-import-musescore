@@ -36,6 +36,7 @@ public enum MetaTag: XMLObjectDeserialization {
 	case lyricist(String)
 	case movementNumber(String)
 	case movementTitle(String)
+	case originalFormat(String)
 	case platform(String)
 	case source(String)
 	case subtitle(String)
@@ -60,6 +61,8 @@ public enum MetaTag: XMLObjectDeserialization {
 			return .movementNumber(try node.value())
 		case "movementTitle":
 			return .movementTitle(try node.value())
+		case "originalFormat":
+			return .originalFormat(try node.value())
 		case "platform":
 			return .platform(try node.value())
 		case "source":

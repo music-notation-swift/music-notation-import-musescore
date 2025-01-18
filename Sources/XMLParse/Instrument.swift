@@ -14,6 +14,7 @@ import SWXMLHash
 
 public struct Instrument: XMLObjectDeserialization {
 	static let nodeKey = "instrument"
+
 	var id: String
 	var family: Family
 

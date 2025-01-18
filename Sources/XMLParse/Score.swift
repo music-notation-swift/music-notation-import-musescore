@@ -18,7 +18,7 @@ public struct Score: XMLObjectDeserialization {
 	var showMargins: Bool
 	var open: Int
 	var metaTags: [MetaTag]
-	var order: ScoreOrder
+	var order: ScoreOrder?
 	var parts: [Part]
 	var staves: [Staff]
 

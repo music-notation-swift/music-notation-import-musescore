@@ -35,7 +35,7 @@ import Testing
 		#expect(score.showMargins == false)
 		#expect(score.open == 1)
 		#expect(score.metaTags.count == 13)
-		#expect(score.order.id == "orchestral")
+		#expect(score.order?.id == "orchestral")
 		#expect(score.parts.count == 2)
 		#expect(score.parts[0].id == 1)
 		#expect(score.parts[1].id == 2)

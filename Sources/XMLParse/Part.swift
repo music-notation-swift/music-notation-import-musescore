@@ -127,7 +127,7 @@ public struct Part: XMLObjectDeserialization {
 
 	var id: Int
 
-	// A list of Staves that are linked to each other. Like notation+tablature
+	// A list of Staves that are linked to each other. Like `Treble Clef` staff + `tablature staff`
 	var staves: [Part.Staff]
 
 	var trackName: String
