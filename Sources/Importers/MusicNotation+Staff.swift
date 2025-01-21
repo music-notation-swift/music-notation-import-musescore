@@ -17,10 +17,7 @@ extension MusicNotation.Staff {
 	) throws -> [MusicNotation.Staff] {
 		let staves = try part.staves.map { staff in
 			let measures = try MusicNotation.Measure.generate(with: interchangeFormat, for: staff)
-			return MusicNotation.Staff(
-				instrument: MusicNotation.Instrument(),
-				measure: measures
-			)
+			return MusicNotation.Staff(measure: measures)
 		}
 
 		return staves

@@ -12,9 +12,8 @@ extension MusicNotation.Part {
 	static func generate(with interchangeFormat: MuseScoreInterchangeFormat) throws -> [MusicNotation.Part] {
 		let parts = try interchangeFormat.score.parts.map { part in
 			let staves = try MusicNotation.Staff.generate(with: interchangeFormat, for: part)
-			let instrument = part.instrument
-			return MusicNotation.Part(
-				name: instrument.longName, shortName: instrument.shortName, staves: staves)
+			let instrument = try MusicNotation.Instrument(with: part.instrument)
+			return MusicNotation.Part(instrument: instrument, staves: staves)
 		}
 
 		return parts
