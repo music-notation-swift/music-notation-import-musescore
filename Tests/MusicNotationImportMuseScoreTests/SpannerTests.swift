@@ -112,8 +112,8 @@ import Testing
 """#
 		let xmlParser = XMLHash.parse(xmlString)
 		let slurSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
-		if case Spanner.SpannerType.slur(let slur) = slurSpanner.spannerType {
-			#expect(slur != nil)
+		if case Spanner.SpannerType.slur(_) = slurSpanner.spannerType {
+			#expect(Bool(true))
 		} else {
 			#expect(Bool(false))
 		}
@@ -194,7 +194,6 @@ import Testing
 		let xmlParser = XMLHash.parse(xmlString)
 		let voltaSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
 		if case Spanner.SpannerType.volta(let volta) = voltaSpanner.spannerType {
-			#expect(volta != nil)
 			#expect(volta.endHookType == 1)
 			#expect(volta.beginText == "1.")
 			#expect(volta.endings == "1")
@@ -224,7 +223,6 @@ import Testing
 		let whammyBarSpanner: Spanner = try xmlParser[Spanner.nodeKey].value()
 		if case Spanner.SpannerType.whammyBar(let whammy) = whammyBarSpanner.spannerType,
 		   let whammy {
-			#expect(whammy != nil)
 			#expect(whammy.eid == 17892833755238)
 			#expect(whammy.beginTextOffset == (1, 2))
 		} else {

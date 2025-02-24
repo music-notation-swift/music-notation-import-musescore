@@ -156,13 +156,13 @@ extension AttributeItemStringRawRepresentable: Equatable {
 
 	@Test func shouldThrowWhenConvertingEmptyToNonOptional() async throws {
 		#expect(throws: XMLDeserializationError.self) {
-			try (parser!["root"]["empty"].value() as ComplexItem)
+			try (self.parser!["root"]["empty"].value() as ComplexItem)
 		}
 	}
 
 	@Test func shouldThrowWhenConvertingMissingToNonOptional() async throws {
 		#expect(throws: XMLDeserializationError.self) {
-			try (parser!["root"]["missing"].value() as ComplexItem)
+			try (self.parser!["root"]["missing"].value() as ComplexItem)
 		}
 	}
 
@@ -173,7 +173,7 @@ extension AttributeItemStringRawRepresentable: Equatable {
 
 	@Test func shouldConvertEmptyToOptional() async throws {
 		#expect(throws: XMLDeserializationError.self) {
-			try (parser!["root"]["empty"].value() as ComplexItem?)
+			try (self.parser!["root"]["empty"].value() as ComplexItem?)
 		}
 	}
 
@@ -201,6 +201,9 @@ struct ComplexItem: XMLObjectDeserialization {
 
 extension ComplexItem: Equatable {
 	static func == (lhs: ComplexItem, rhs: ComplexItem) -> Bool {
-		lhs.name == rhs.name && lhs.priceOptional == rhs.priceOptional && lhs.basics == rhs.basics && lhs.attrs == rhs.attrs
+		lhs.name == rhs.name &&
+		lhs.priceOptional == rhs.priceOptional &&
+		lhs.basics == rhs.basics &&
+		lhs.attrs == rhs.attrs
 	}
 }

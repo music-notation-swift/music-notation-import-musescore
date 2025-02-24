@@ -62,16 +62,14 @@ import Testing
 
 	@Test func parseSpecificMetaTag() async throws {
 		let metaTag: MetaTag = try xml!["root"]["metaTag"].withAttribute("name", "arranger").value()
-		#expect(metaTag != nil)
-
 		guard case let .arranger(string) = metaTag else { Issue.record("arranger data not found"); return }
 		#expect(string == "test arranger")
 	}
 
 	@Test func parseBadMetaTag() async throws {
 		#expect(throws: MetaTagParseError.self) {
-			xml = XMLHash.parse(badXMLToParse)
-			let metaTags: [MetaTag] = try xml!["root"]["metaTag"].value()
+			self.xml = XMLHash.parse(self.badXMLToParse)
+			let metaTags: [MetaTag] = try self.xml!["root"]["metaTag"].value()
 			#expect(metaTags.count == 0)
 		}
 	}

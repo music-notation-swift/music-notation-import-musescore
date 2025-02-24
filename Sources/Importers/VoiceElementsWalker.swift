@@ -10,7 +10,7 @@ import MusicNotation
 
 extension Measure {
 	// Walk the list of VoiceElements of a measure and generate the appropriate
-	// MusicNotation elements inside a given measure
+	// MusicNotation elements inside a given measure. WIP
 	func walker(
 		with interchangeFormat: MuseScoreInterchangeFormat,
 		for voiceElement: VoiceElement,
